@@ -44,6 +44,11 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CountDownTimer.cs" />
+    <Compile Include="Util\CountUpTimer.cs" />
+    <Compile Include="Util\Motion.cs" />
+    <Compile Include="Util\Range.cs" />
+    <Compile Include="Util\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

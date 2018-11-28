@@ -73,6 +73,7 @@ namespace WireGame_24
             renderer.LoadContent("haikei_1");
             renderer.LoadContent("Title1");
             renderer.LoadContent("Ending");
+            renderer.LoadContent("Player0");
 
             // この上にロジックを記述
         }

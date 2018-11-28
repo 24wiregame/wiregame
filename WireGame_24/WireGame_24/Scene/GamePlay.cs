@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using WireGame_24.Actor;
 using WireGame_24.Device;
 
 
@@ -13,7 +14,9 @@ namespace WireGame_24.Scene
 {
     class GamePlay : IScene
     {
-        private bool isEndFlag;//終了フラグ
+        private bool isEndFlag;           //終了フラグ
+        private Player player;    　　　　//プレイヤー
+        private GameDevice gameDevice;    //ゲームデバイス
 
         /// <summary>
         /// コンストラクタ
@@ -21,6 +24,7 @@ namespace WireGame_24.Scene
         public GamePlay()
         {
             isEndFlag = false;
+            var gameDevice = GameDevice.Instance();
         }
         /// <summary>
         /// 描画
@@ -30,6 +34,7 @@ namespace WireGame_24.Scene
         {
             renderer.Begin();
             renderer.DrawTexture("haikei_1", Vector2.Zero);
+            player.Draw(renderer);
             renderer.End();
         }
 
@@ -38,6 +43,8 @@ namespace WireGame_24.Scene
         /// </summary>
         public void Initialize()
         {
+            player = new Player(new Vector2(200, 500), gameDevice);
+            player.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
         }
@@ -74,6 +81,7 @@ namespace WireGame_24.Scene
         /// <param name="gameTime">ゲーム時間</param>
         public void Update(GameTime gameTime)
         {
+            player.Update(gameTime);
             if (Input.IsKeyDown(Keys.Space))
             {
                 isEndFlag = true;

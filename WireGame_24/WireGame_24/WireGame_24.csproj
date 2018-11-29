@@ -42,6 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actor\Player.cs" />
+    <Compile Include="Actor\TarGet.cs" />
+    <Compile Include="Actor\Wire.cs" />
     <Compile Include="CSVReader.cs" />
     <Compile Include="Def\Screen.cs" />
     <Compile Include="Def\Size.cs" />

@@ -143,6 +143,16 @@ namespace WireGame_24.Device
         {
             return currentKey.IsKeyDown(key);
         }
+        /// <summary>
+        /// 離した瞬間か？
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool GetKeyRelease(Keys key)
+        {
+            return !currentKey.IsKeyDown(key) && previousKey.IsKeyDown(key);
+        }
+
         #endregion   キーボード関連
 
         #region  マウス関連

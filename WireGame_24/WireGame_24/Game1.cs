@@ -74,6 +74,8 @@ namespace WireGame_24
             renderer.LoadContent("Title1");
             renderer.LoadContent("Ending");
             renderer.LoadContent("Player0");
+            renderer.LoadContent("pointer");
+            renderer.LoadContent("bullet3");
 
             // この上にロジックを記述
         }

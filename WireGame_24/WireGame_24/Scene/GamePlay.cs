@@ -16,7 +16,10 @@ namespace WireGame_24.Scene
     {
         private bool isEndFlag;           //終了フラグ
         private Player player;    　　　　//プレイヤー
+        private TarGet tarGet;            //ターゲット
+        private Wire wire;　　　　　　　　//ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
+        
 
         /// <summary>
         /// コンストラクタ
@@ -35,6 +38,8 @@ namespace WireGame_24.Scene
             renderer.Begin();
             renderer.DrawTexture("haikei_1", Vector2.Zero);
             player.Draw(renderer);
+            wire.Draw(renderer);
+            tarGet.Draw(renderer);
             renderer.End();
         }
 
@@ -45,6 +50,8 @@ namespace WireGame_24.Scene
         {
             player = new Player(new Vector2(200, 500), gameDevice);
             player.Initialize();
+            tarGet = new TarGet(new Vector2(800, 300), gameDevice);
+            wire = new Wire(player, tarGet);
             //シーン終了フラグを初期化
             isEndFlag = false;
         }
@@ -82,6 +89,7 @@ namespace WireGame_24.Scene
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
+            wire.Update(gameTime);
             if (Input.IsKeyDown(Keys.Space))
             {
                 isEndFlag = true;

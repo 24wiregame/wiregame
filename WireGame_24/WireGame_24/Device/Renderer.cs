@@ -215,6 +215,24 @@ namespace WireGame_24.Device
 
             spriteBatch.Draw(textures[assetName], position, color * alpha);
         }
+
+        public void DrawTexture(string name, Vector2 position, float rotation, Vector2 origin, Vector2 scale)
+        {
+            spriteBatch.Draw(
+                textures[name],
+                position,
+                null,
+                Color.White,
+                rotation,
+                origin,
+                scale,
+                SpriteEffects.None,
+                1
+                );
+            Console.WriteLine("scale" + scale);
+
+        }
+
         #endregion  画像の描画
 
 

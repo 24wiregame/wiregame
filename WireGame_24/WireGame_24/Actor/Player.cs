@@ -16,7 +16,7 @@ namespace WireGame_24.Actor
         public Vector2 position;
         private Vector2 velocity;
         private bool isJump;
-
+        private Vector2 originVelocty;
 
         private float gravity;
         public Player(Vector2 position, GameDevice gameDevice)
@@ -39,9 +39,11 @@ namespace WireGame_24.Actor
             //移動量
             float sped = 20.0f;
             //移動処理
-            position.X = position.X + velocity.X * sped;
+            position.X = position.X + velocity.X * sped + originVelocty.X;
 
-            position.Y += velocity.Y;
+            position.Y += velocity.Y + originVelocty.Y;
+
+            originVelocty *= 0.99f;
 
             //当たり判定(衝突判定)
             var min = Vector2.Zero;
@@ -52,19 +54,16 @@ namespace WireGame_24.Actor
             {
                 isJump = false;
             }
+            if (position.Y == min.Y)
+            {
+                velocity.Y = 0;
+            }
 
         }
 
         public void Draw(Renderer renderer)
         {
             renderer.DrawTexture("Player0", position);
-        }
-        /// <summary>
-        /// ジャンプ処理
-        /// </summary>
-        public void Jump()
-        {
-
         }
         /// <summary>
         /// ジャンプスタート
@@ -89,6 +88,14 @@ namespace WireGame_24.Actor
         public float GetVeloity()
         {
             return velocity.X;
+        }
+        public void SetJump(bool flg)
+        {
+            isJump = flg;
+        }
+        public void SetSpeed(Vector2 velocity)
+        {
+            originVelocty = velocity;
         }
     }
 }

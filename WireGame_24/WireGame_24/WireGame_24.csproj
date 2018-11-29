@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\TarGet.cs" />
     <Compile Include="Actor\Wire.cs" />

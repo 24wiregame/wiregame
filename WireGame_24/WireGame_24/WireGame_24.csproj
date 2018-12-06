@@ -51,6 +51,7 @@
     <Compile Include="Def\Screen.cs" />
     <Compile Include="Def\Size.cs" />
     <Compile Include="Device\Camera.cs" />
+    <Compile Include="Device\CSVReader.cs" />
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\Input.cs" />
     <Compile Include="Device\Renderer.cs" />

@@ -13,7 +13,7 @@ namespace WireGame_24.Actor
 {
     class Player
     {
-        public Vector2 position;
+        private Vector2 position;
         private Vector2 velocity;
         private bool isJump;
         private Vector2 originVelocty;
@@ -38,9 +38,13 @@ namespace WireGame_24.Actor
 
             //移動量
             float sped = 20.0f;
+            //if (!isJump)
+            //{
+            //    originVelocty = Vector2.Zero;
+            //}
             //移動処理
             position.X = position.X + velocity.X * sped + originVelocty.X;
-
+            
             position.Y += velocity.Y + originVelocty.Y;
 
             originVelocty *= 0.99f;
@@ -84,6 +88,14 @@ namespace WireGame_24.Actor
         public Vector2 GetPosition()
         {
             return position;
+        }
+        public void SetPositionX(float positionX)
+        {
+            position.X = positionX;
+        }
+        public void SetPositionY(float positionY)
+        {
+            position.Y = positionY;
         }
         public float GetVeloity()
         {

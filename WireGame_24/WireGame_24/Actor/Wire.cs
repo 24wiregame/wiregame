@@ -53,8 +53,8 @@ namespace WireGame_24.Actor
                 length = line.Length();                       //線の長さ
                 rot = MathHelper.ToDegrees(
                     (float)Math.Atan2(
-                        player.position.Y - wireTop.Y,
-                        player.position.X - wireTop.X)
+                        player.GetPosition().Y - wireTop.Y,
+                        player.GetPosition().X - wireTop.X)
                     );
                 rot_spd = 0;
             }
@@ -100,10 +100,10 @@ namespace WireGame_24.Actor
                 py = wireTop.Y + Math.Sin(rad) * length;
 
 
-                velocity = new Vector2((float)px - player.position.X, (float)py - player.position.Y);
+                velocity = new Vector2((float)px - player.GetPosition().X, (float)py - player.GetPosition().Y);
 
-                player.position.X = (float)px;
-                player.position.Y = (float)py;
+                player.SetPositionX((float)px);
+                player.SetPositionY((float)py);
                 player.SetJump(false);
             }
             else

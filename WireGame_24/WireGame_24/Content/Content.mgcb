@@ -85,3 +85,6 @@
 /processorParam:TextureFormat=Color
 /build:pointer.bmp
 
+#begin stage001.csv
+/copy:stage001.csv
+

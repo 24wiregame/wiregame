@@ -42,6 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actor\Goal.cs" />
+    <Compile Include="Actor\GameObject.cs" />
+    <Compile Include="Actor\GameObjectManager.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\TarGet.cs" />
     <Compile Include="Actor\Wire.cs" />
@@ -52,9 +54,11 @@
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\Input.cs" />
     <Compile Include="Device\Renderer.cs" />
+    <Compile Include="Device\Sound.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scene\IGameObjectMediator.cs" />
     <Compile Include="Scene\Score.cs" />
     <Compile Include="Util\CountDownTimer.cs" />
     <Compile Include="Util\CountUpTimer.cs" />
@@ -67,6 +71,7 @@
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Scene\Title.cs" />
+    <Compile Include="Util\TimerUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

@@ -19,7 +19,7 @@ namespace WireGame_24.Scene
         private TarGet tarGet;            //ターゲット
         private Wire wire;　　　　　　　　//ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
-        
+        private Map map;                  //マップ
 
         /// <summary>
         /// コンストラクタ
@@ -27,7 +27,7 @@ namespace WireGame_24.Scene
         public GamePlay()
         {
             isEndFlag = false;
-            var gameDevice = GameDevice.Instance();
+            gameDevice = GameDevice.Instance();
         }
         /// <summary>
         /// 描画
@@ -50,6 +50,7 @@ namespace WireGame_24.Scene
         {
             player = new Player(new Vector2(200, 500), gameDevice);
             player.Initialize();
+           
             tarGet = new TarGet(new Vector2(800, 300), gameDevice);
             wire = new Wire(player, tarGet);
             //シーン終了フラグを初期化

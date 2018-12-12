@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
 using WireGame_24.Device;
-
+using WireGame_24.Actor.Interface;
 namespace WireGame_24.Actor
 {
-    class Block : GameObject
+    class Bara : GameObject
     {
-        public Block(Vector2 position, GameDevice gameDevice)
-            :base("block", position,32,32,gameDevice)
+        public Bara(Vector2 position, GameDevice gameDevice)
+            : base("Bara", position, 32, 32, gameDevice)
         { }
 
-        public Block(Block other)
-            :this(other.position, other.gameDevice)
+        public Bara(Bara other)
+            : this(other.position, other.gameDevice)
         {
         }
 
         public override object Clone()
         {
-            return new Block(this);
+            return new Bara(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -31,12 +30,13 @@ namespace WireGame_24.Actor
 
         public override void Hit(GameObject gameObject)
         {
-            var player = gameObject as Player;
-            if (player == null)
+            var deadcomponet = gameObject as IApplicableDead;
+            if(deadcomponet == null)
             {
                 return;
             }
-            player.SetVelocity(new Vector2(0, -5));
+            deadcomponet.Die();
         }
+
     }
 }

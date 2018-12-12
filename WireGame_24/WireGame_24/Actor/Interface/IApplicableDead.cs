@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WireGame_24.Def
+namespace WireGame_24.Actor.Interface
 {
-    class Size
+    interface IApplicableDead
     {
-        public static readonly int BlockX = 64;
-        public static readonly int BlockY = 64;
+        void Die();
 
     }
 }

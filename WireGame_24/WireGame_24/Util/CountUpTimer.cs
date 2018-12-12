@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 
 namespace WireGame_24.Util
 {
@@ -16,13 +16,13 @@ namespace WireGame_24.Util
         /// コンストラクタ
         /// </summary>
         public CountUpTimer()
-            : base()
+            :base()
         {
             Initialize();
         }
 
-        public CountUpTimer(float second)
-            : base(second)
+        public CountUpTimer( float second)
+            :base(second)
         {
             Initialize();
         }

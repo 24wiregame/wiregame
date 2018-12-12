@@ -1,9 +1,9 @@
-﻿using System;
+﻿using WireGame_24.Actor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WireGame_24.Actor;
 
 namespace WireGame_24.Scene
 {
@@ -11,6 +11,6 @@ namespace WireGame_24.Scene
     {
         void AddGameObject(GameObject gameObject);
         GameObject GetPlayer();
-        bool IsPlayerDead();
+      //  bool IsPlayerDead();
     }
 }

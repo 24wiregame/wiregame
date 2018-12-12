@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace WireGame_24.Scene
 {
+    /// <summary>
+    /// シーン名の列挙型
+    /// </summary>
     enum Scene
     {
+        Load,
         Title,
         GamePlay,
         Ending,

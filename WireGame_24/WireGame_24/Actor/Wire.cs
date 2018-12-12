@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using WireGame_24.Device;
-
-
 namespace WireGame_24.Actor
 {
     class Wire

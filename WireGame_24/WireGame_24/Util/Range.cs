@@ -19,7 +19,7 @@ namespace WireGame_24.Util
         /// </summary>
         /// <param name="first">範囲の最初</param>
         /// <param name="end">終端番号</param>
-        public Range(int first, int end)
+        public Range( int first, int end)
         {
             this.first = first;
             this.end = end;
@@ -85,4 +85,3 @@ namespace WireGame_24.Util
         }
     }
 }
-

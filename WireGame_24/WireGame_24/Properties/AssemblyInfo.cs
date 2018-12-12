@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WireGame_24")]
-[assembly: AssemblyProduct("WireGame_24")]
+[assembly: AssemblyTitle("Action")]
+[assembly: AssemblyProduct("Action")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0156e1f9-dfe7-492e-b4f8-9ddf70471568")]
+[assembly: Guid("b9971dfc-af76-4ffc-8eb5-a02d1f34f408")]
 
 // Version information for an assembly consists of the following four values:
 //

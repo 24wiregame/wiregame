@@ -1,30 +1,31 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace WireGame_24.Device
 {
+    /// <summary>
+    /// ゲームデバイスクラス
+    /// 継承できないのでsealedで明示的に
+    /// </summary>
     sealed class GameDevice
     {
         //唯一のインスタンス
         private static GameDevice instance;
-
+        private Vector2 displayModify;
         //デバイス関連のフィールド
         private Renderer renderer;
-        //private Sound sound;
+        private Sound sound;
         private static Random random;
         private ContentManager content;
         private GraphicsDevice graphics;
         private GameTime gameTime;
-
-        private Vector2 displayModify;
 
         /// <summary>
         /// コンストラクタ
@@ -35,12 +36,10 @@ namespace WireGame_24.Device
         private GameDevice(ContentManager content, GraphicsDevice graphics)
         {
             renderer = new Renderer(content, graphics);
-           // sound = new Sound(content);
+            sound = new Sound(content);
             random = new Random();
             this.content = content;
             this.graphics = graphics;
-
-            displayModify = new Vector2(0, 0);
         }
 
         #region インスタンスの取得
@@ -54,7 +53,7 @@ namespace WireGame_24.Device
         public static GameDevice Instance(ContentManager content, GraphicsDevice graphics)
         {
             //インスタンスがまだ生成されてないければ生成する
-            if (instance == null)
+            if( instance == null)
             {
                 instance = new GameDevice(content, graphics);
             }
@@ -106,10 +105,10 @@ namespace WireGame_24.Device
         /// サウンドオブジェクトの取得
         /// </summary>
         /// <returns>サウンドオブジェクト</returns>
-        //public Sound GetSound()
-        //{
-        //    return sound;
-        //}
+        public Sound GetSound()
+        {
+            return sound;
+        }
 
         /// <summary>
         /// 乱数オブジェクトの取得
@@ -146,13 +145,10 @@ namespace WireGame_24.Device
         {
             return gameTime;
         }
-
-
         public void SetDisplayModify(Vector2 position)
         {
             this.displayModify = position;
         }
-
         public Vector2 GetDisplayModify()
         {
             return displayModify;

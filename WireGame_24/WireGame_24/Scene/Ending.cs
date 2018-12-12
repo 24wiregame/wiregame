@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using WireGame_24.Device;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace WireGame_24.Scene
 {
@@ -15,17 +15,16 @@ namespace WireGame_24.Scene
     /// </summary>
     class Ending : IScene
     {
-
         private bool isEndFlag;//終了フラグ
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Ending(IScene scene)
+        public Ending( )
         {
-            isEndFlag = false;
-            var gameDevice = GameDevice.Instance();
+            isEndFlag = false;     
         }
+
         /// <summary>
         /// 描画
         /// </summary>
@@ -33,9 +32,11 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            renderer.DrawTexture("Ending", Vector2.Zero);
+            renderer.DrawTexture("block", Vector2.Zero);
+            renderer.DrawTexture("black", new Vector2 (32, 0));
             renderer.End();
         }
+
 
         /// <summary>
         /// 初期化
@@ -60,7 +61,8 @@ namespace WireGame_24.Scene
         /// <returns>次のシーン名</returns>
         public Scene Next()
         {
-            return Scene.Title;
+            Scene nextScene = Scene.Title;
+            return nextScene;
         }
 
         /// <summary>
@@ -76,11 +78,10 @@ namespace WireGame_24.Scene
         /// <param name="gameTime">ゲーム時間</param>
         public void Update(GameTime gameTime)
         {
-            if (Input.IsKeyDown(Keys.Space))
+            if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
             }
         }
-
     }
 }

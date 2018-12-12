@@ -11,6 +11,9 @@ using System.Diagnostics;//Assert用
 
 namespace WireGame_24.Device
 {
+    /// <summary>
+    /// 描画管理クラス
+    /// </summary>
     class Renderer
     {
         #region フィールド
@@ -215,7 +218,7 @@ namespace WireGame_24.Device
 
             spriteBatch.Draw(textures[assetName], position, color * alpha);
         }
-
+        //ワイヤー処理
         public void DrawTexture(string name, Vector2 position, float rotation, Vector2 origin, Vector2 scale)
         {
             spriteBatch.Draw(
@@ -232,7 +235,6 @@ namespace WireGame_24.Device
             Console.WriteLine("scale" + scale);
 
         }
-
         #endregion  画像の描画
 
 
@@ -335,7 +337,7 @@ namespace WireGame_24.Device
         /// </summary>
         /// <param name="width">テクスチャ横幅</param>
         /// <param name="height">テクスチャ縦幅</param>
-        public void InitializeRenderTarget(int width, int height)
+        public void InitializeRenderTarget( int width, int height)
         {
             target2D = new RenderTarget2D(graphicsDevice, width, height);
         }
@@ -400,4 +402,3 @@ namespace WireGame_24.Device
         #endregion レンダーターゲット関連
     }
 }
-

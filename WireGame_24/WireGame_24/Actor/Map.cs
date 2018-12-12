@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace WireGame_24.Actor
 {
-    class Map  
+    class Map
     {
         private List<List<GameObject>> mapList;
         private GameDevice gameDevice;
@@ -20,30 +20,32 @@ namespace WireGame_24.Actor
             this.gameDevice = gameDevice;
         }
 
-        private List<GameObject> addBlock(int lineCnt, string[] line)
+        private List<GameObject>addBlock(int lineCnt , string[]line)
         {
             Dictionary<string, GameObject> objectList = new Dictionary<string, GameObject>();
-
+            //スペース
             objectList.Add("0", new Space(Vector2.Zero, gameDevice));
-
+      　　　//ブロック
             objectList.Add("1", new Block(Vector2.Zero, gameDevice));
-
-         //   objectList.Add("2", new Bara(Vector2.Zero, gameDevice));
-
-        //    objectList.Add("3", new Cushion(Vector2.Zero, gameDevice));
+            //バラ（DeathBlock）
+            objectList.Add("2", new Bara(Vector2.Zero, gameDevice));
+            //クッション（吸収ブロック)
+            objectList.Add("3", new Cushion(Vector2.Zero, gameDevice));
+            //ジャンプ（ジャンプ台)
+            objectList.Add("4", new Jump(Vector2.Zero, gameDevice));
 
             List<GameObject> workList = new List<GameObject>();
             int colCnt = 0;
-            foreach (var s in line)
+            foreach(var s in line)
             {
                 try
                 {
                     GameObject work = (GameObject)objectList[s].Clone();
                     work.SetPosition(new Vector2(colCnt * work.GetHeight(),
-                        lineCnt * work.GetWidth()));
+                        lineCnt * work.GetWidht()));
                     workList.Add(work);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     Console.WriteLine(e);
                 }
@@ -57,7 +59,7 @@ namespace WireGame_24.Actor
             CSVReader csvReader = new CSVReader();
             csvReader.Read(filename, path);
             var data = csvReader.GetData();
-            for (int lineCnt = 0; lineCnt < data.Count(); lineCnt++)
+            for(int lineCnt = 0; lineCnt < data.Count(); lineCnt++)
             {
                 mapList.Add(addBlock(lineCnt, data[lineCnt]));
             }
@@ -70,28 +72,28 @@ namespace WireGame_24.Actor
         {
             foreach (var list in mapList)
             {
-                foreach (var obj in list)
+                foreach(var obj in list)
                 {
-                    if (obj is Space)
+                    if(obj is Space)
                     {
                         continue;
                     }
                     obj.Update(gameTime);
                 }
-
+                
             }
-
+            
         }
         public void Hit(GameObject gameObject)
         {
-            Point work = gameObject.GetRectangle().Location;
+            Point work = gameObject.getRectangle().Location;
             int x = work.X / 32;
             int y = work.Y / 32;
-            if (x < 1)
+            if(x < 1)
             {
                 x = 1;
             }
-            if (y < 1)
+            if(y < 1)
             {
                 y = 1;
             }
@@ -100,7 +102,7 @@ namespace WireGame_24.Actor
 
             for (int row = y - 1; row <= (y + 1); row++)
             {
-                xRange = new Range(0, mapList[row].Count() - 1);
+                 xRange = new Range(0, mapList[row].Count() - 1);
                 for (int col = x - 1; col <= (x + 1); col++)
                 {
                     if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))
@@ -108,11 +110,11 @@ namespace WireGame_24.Actor
                         continue;
                     }
                     GameObject obj = mapList[row][col];
-                    if (obj is Space)
+                    if(obj is Space)
                     {
                         continue;
                     }
-                    if (obj.IsCollision(gameObject))
+                    if(obj.IsCollision(gameObject))
                     {
                         gameObject.Hit(obj);
                         obj.Hit(gameObject);
@@ -126,7 +128,7 @@ namespace WireGame_24.Actor
             {
                 foreach (var obj in list)
                 {
-                    if (obj is Space)
+                    if(obj is Space)
                     {
                         continue;
                     }

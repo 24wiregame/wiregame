@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using WireGame_24.Device;
-
 namespace WireGame_24.Actor
 {
     class TarGet

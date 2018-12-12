@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
 
 namespace WireGame_24.Util
@@ -58,10 +59,10 @@ namespace WireGame_24.Util
         /// </summary>
         /// <param name="index">管理番号</param>
         /// <param name="rect">矩形</param>
-        public void Add(int index, Rectangle rect)
+        public void Add( int index, Rectangle rect)
         {
             //すでに登録されてたら何もしない
-            if (rectangles.ContainsKey(index))
+            if( rectangles.ContainsKey(index))
             {
                 return;
             }
@@ -78,7 +79,7 @@ namespace WireGame_24.Util
             motionNumber += 1;
 
             //範囲外なら最初に戻す
-            if (range.IsOutOfRange(motionNumber))
+            if( range.IsOutOfRange(motionNumber))
             {
                 motionNumber = range.First();
             }
@@ -88,10 +89,10 @@ namespace WireGame_24.Util
         /// 更新
         /// </summary>
         /// <param name="gameTime">ゲーム時間</param>
-        public void Update(GameTime gameTime)
+        public void Update( GameTime gameTime)
         {
             //ガード説（範囲外なら何もしない
-            if (range.IsOutOfRange())
+            if( range.IsOutOfRange())
             {
                 return;
             }
@@ -99,7 +100,7 @@ namespace WireGame_24.Util
             //時間を更新
             timer.Update(gameTime);
             //指定時間になってたらモーション更新
-            if (timer.IsTime())
+            if(timer.IsTime())
             {
                 timer.Initialize();
                 MotionUpdate();

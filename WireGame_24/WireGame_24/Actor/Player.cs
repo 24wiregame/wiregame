@@ -3,91 +3,178 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using WireGame_24.Device;
+using Microsoft.Xna.Framework.Input;
 using WireGame_24.Def;
-
+using WireGame_24.Scene;
+using WireGame_24.Actor.Interface;
 namespace WireGame_24.Actor
 {
-    class Player
+    class Player : GameObject, IApplicableDead
     {
-        private Vector2 position;
+        private IGameObjectMediator mediator;
         private Vector2 velocity;
         private bool isJump;
+        private bool isfall;
         private Vector2 originVelocty;
-
         private float gravity;
-        public Player(Vector2 position, GameDevice gameDevice)
+
+        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator)
+            : base("player", position, 32, 32, gameDevice)
         {
-            this.position = position;
+            velocity = Vector2.Zero;
+            isJump = true;
+            this.mediator = mediator;
+        }
+        public Player(Player other)
+            : this(other.position, other.gameDevice, other.mediator)
+        {
+
+        }
+        public override object Clone()
+        {
+            return new Player(this);
+        }
+        public override void Hit(GameObject gameObject)
+        {
+            if (gameObject is Bara)
+            {
+                hitBlock(gameObject);
+                //isDeadFlag = true;
+
+            }
+            if (gameObject is Block )
+            {
+                hitBlock(gameObject);
+            }
+            if (gameObject is Cushion)
+            {
+                hitBlock(gameObject);
+            }
+
+        }
+            
+
+    
+
+        
+        public override void Update(GameTime gameTime)
+        {
+            //originVelocty *= 0.99f;
+            //position.X = position.X + velocity.X * speed + originVelocty.X;
+
+            //position.Y += velocity.Y + originVelocty.Y;
+
+            if (position.Y > Screen.Height)
+            {
+                isDeadFlag = true;
+                isfall = true;
+
+            }
+
+            if((isJump == false)&&
+                (Input.GetKeyTrigger(Keys.Space)||
+                Input.GetKeyTrigger(PlayerIndex.One, Buttons.B)))
+            {
+                velocity.Y = -8.0f;
+                isJump = true;
+            }
+            else
+            {
+                velocity.Y = velocity.Y + 0.4f;
+                velocity.Y = (velocity.Y > 16.0f) ? (16.0f) : (velocity.Y);
+            }
+            float speed = 4.0f;
+            if (Input.GetKeyState(Keys.Z))
+            {
+
+                speed = 8.0f;
+            }
+            velocity.X = Input.Velocity().X * speed;
+            float inputVelocity = Input.Velocity().X;
+            velocity.X = Input.Velocity().X * speed +
+               Input.Velocity(PlayerIndex.One).X * speed;
+             position = position + velocity;
+            Console.WriteLine("Velocity:"+velocity);
+            //プレイヤーの位置を画面の中心に位置補正する
+            setDisplayModify();
+        }
+        private void hitBlock(GameObject gameObject)
+        {
+            Direction dir = this.CheckDirection(gameObject);
+            if(dir == Direction.Top)
+            {
+                if(position.Y > 0.0f)
+                {
+                    position.Y = gameObject.getRectangle().Top - this.height;
+                    velocity.Y = 0.0f;
+                    isJump = false;
+                }
+                    Console.WriteLine("HitTop");
+            }
+            else if(dir == Direction.Right)
+            {
+                position.X = gameObject.getRectangle().Right;
+                Console.WriteLine("HitRight");
+            }
+            else if(dir == Direction.Left)
+            {
+                position.X = gameObject.getRectangle().Left - this.width;
+                Console.WriteLine("HitLeft");
+            }
+            else if(dir == Direction.Bottom)
+            {
+                position.Y = gameObject.getRectangle().Bottom;
+                if(isJump)
+                {
+                    velocity.Y = 0.0f;
+                }
+                Console.WriteLine("HitBottom");
+
+            }
+            setDisplayModify();
+        }
+        private void setDisplayModify()
+        {
+            gameDevice.SetDisplayModify(new Vector2(-position.X + (Screen.Width / 2 -
+                width / 2), 0.0f));
+            if(position.X < (Screen.Width / 2-width / 2) )
+            {
+                gameDevice.SetDisplayModify(Vector2.Zero);
+           }
+        }
+        private void setSlideModify(GameObject gameObject)
+        {
+            Direction dir = this.CheckDirection(gameObject);
+
         }
 
+        //死んだときの動きの大きさ
+
+
+        public void Die()
+        {
+            isDeadFlag = true;
+            velocity = new Vector2(0,-12);
+        }
+        public bool Isfall()
+        {
+            return isfall;
+        }
+        public void SetVelocity(Vector2 velocity)
+        {
+            this.velocity = velocity;
+
+        }
+        //public bool IsDead()
+        //{
+        //    return isDeadFlag;
+        //}
         public void Initialize()
         {
             gravity = 0.5f;
             isJump = false;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            //キー入力の移動量を取得
-            velocity.X = Input.Velocity().X;
-            JumpStart();
-
-            //移動量
-            float sped = 20.0f;
-            //if (!isJump)
-            //{
-            //    originVelocty = Vector2.Zero;
-            //}
-            //移動処理
-            position.X = position.X + velocity.X * sped + originVelocty.X;
-            
-            position.Y += velocity.Y + originVelocty.Y;
-
-            originVelocty *= 0.99f;
-
-            //当たり判定(衝突判定)
-            var min = Vector2.Zero;
-            var max = new Vector2(Screen.Width - 64, Screen.Height - 64);
-
-            position = Vector2.Clamp(position, min, max);
-            if (position.Y == max.Y)
-            {
-                isJump = false;
-            }
-            if (position.Y == min.Y)
-            {
-                velocity.Y = 0;
-            }
-
-        }
-
-        public void Draw(Renderer renderer)
-        {
-            renderer.DrawTexture("Player0", position);
-        }
-        /// <summary>
-        /// ジャンプスタート
-        /// </summary>
-        public void JumpStart()
-        {
-            if (Input.GetKeyTrigger(Keys.Z) && !isJump)
-            {
-                isJump = true;
-                velocity.Y = -15;
-            }
-            if (isJump)
-            {
-                velocity.Y += gravity;
-            }
-        }
-
-        public Vector2 GetPosition()
-        {
-            return position;
         }
         public void SetPositionX(float positionX)
         {

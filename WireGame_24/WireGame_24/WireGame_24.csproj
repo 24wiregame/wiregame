@@ -41,29 +41,33 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actor\Bara.cs" />
     <Compile Include="Actor\Block.cs" />
-    <Compile Include="Actor\Goal.cs" />
+    <Compile Include="Actor\Cushion.cs" />
     <Compile Include="Actor\GameObject.cs" />
     <Compile Include="Actor\GameObjectManager.cs" />
+    <Compile Include="Actor\Interface\IApplicableDead.cs" />
+    <Compile Include="Actor\Jump.cs" />
     <Compile Include="Actor\Map.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Space.cs" />
     <Compile Include="Actor\TarGet.cs" />
     <Compile Include="Actor\Wire.cs" />
-    <Compile Include="CSVReader.cs" />
     <Compile Include="Def\Screen.cs" />
-    <Compile Include="Def\Size.cs" />
-    <Compile Include="Device\Camera.cs" />
+    <Compile Include="Device\BGMLoader.cs" />
     <Compile Include="Device\CSVReader.cs" />
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\Input.cs" />
+    <Compile Include="Device\Loader.cs" />
     <Compile Include="Device\Renderer.cs" />
+    <Compile Include="Device\SELoader.cs" />
     <Compile Include="Device\Sound.cs" />
+    <Compile Include="Device\TextureLoader.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene\IGameObjectMediator.cs" />
-    <Compile Include="Scene\Score.cs" />
+    <Compile Include="Scene\LoadScene.cs" />
     <Compile Include="Util\CountDownTimer.cs" />
     <Compile Include="Util\CountUpTimer.cs" />
     <Compile Include="Util\Motion.cs" />
@@ -75,7 +79,6 @@
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Scene\Title.cs" />
-    <Compile Include="Util\TimerUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

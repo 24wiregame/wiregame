@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
-
-
 using WireGame_24.Device;
 
 namespace WireGame_24.Actor
 {
-
     enum Direction
     {
-        Top, Bottom, Left, Right
+        Top,Bottom,Left,Right
     };
 
     abstract class GameObject : ICloneable
@@ -25,15 +23,14 @@ namespace WireGame_24.Actor
         protected bool isDeadFlag = false;
         protected GameDevice gameDevice;
 
-        public GameObject(string name, Vector2 position, int width, int height, GameDevice gameDevice)
+      public GameObject(string name, Vector2 position, int width,
+          int height, GameDevice gameDevice)
         {
             this.name = name;
             this.position = position;
             this.width = width;
             this.height = height;
             this.gameDevice = gameDevice;
-
-
         }
 
         public void SetPosition(Vector2 position)
@@ -46,7 +43,7 @@ namespace WireGame_24.Actor
             return position;
         }
 
-        public int GetWidth()
+        public int GetWidht()
         {
             return width;
         }
@@ -60,9 +57,9 @@ namespace WireGame_24.Actor
         public abstract void Update(GameTime gameTime);
         public abstract void Hit(GameObject gameObject);
 
-        public virtual void Draw(Renderer renderer)
+        public virtual void Draw ( Renderer renderer)
         {
-            renderer.DrawTexture(name, position);
+            renderer.DrawTexture(name, position + gameDevice.GetDisplayModify());
         }
 
         public bool IsDead()
@@ -70,7 +67,7 @@ namespace WireGame_24.Actor
             return isDeadFlag;
         }
 
-        public Rectangle GetRectangle()
+        public Rectangle getRectangle()
         {
             Rectangle area = new Rectangle();
 
@@ -80,40 +77,40 @@ namespace WireGame_24.Actor
             area.Width = width;
 
             return area;
+
         }
 
         public bool IsCollision(GameObject otherObj)
         {
-            return this.GetRectangle().Intersects(otherObj.GetRectangle());
+            return this.getRectangle().Intersects(otherObj.getRectangle());
         }
 
         public Direction CheckDirection(GameObject otherObj)
         {
-            Point thisCenter = this.GetRectangle().Center;
-            Point otherCenter =
-                otherObj.GetRectangle().Center;
+            Point thisCenter = this.getRectangle().Center;
+            Point otherCenter = otherObj.getRectangle().Center;
 
-            //向きのベクトル
             Vector2 dir =
                 new Vector2(thisCenter.X, thisCenter.Y) -
                 new Vector2(otherCenter.X, otherCenter.Y);
-
-            //当たっている側面をリターンする
-            //x成分とy成分のどちらが多いか
-            if (Math.Abs(dir.X) > Math.Abs(dir.Y))
+            
+            if (Math.Abs(dir.X ) > Math.Abs(dir.Y))
             {
-                if (dir.X > 0)
+                if(dir.X > 0)
                 {
-                    return Direction.Right;  //x方向に+と言えば右
+                    return Direction.Right;
                 }
-                return Direction.Left; //反対方向
-
+                return Direction.Left;
             }
-            if (dir.Y > 0)
+
+            if(dir.Y  > 0)
             {
-                return Direction.Bottom; //プログラム的には↓らしい。
+                return Direction.Bottom;
             }
             return Direction.Top;
+
         }
     }
+
+
 }

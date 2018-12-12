@@ -11,19 +11,19 @@ namespace WireGame_24.Actor
     class Space : GameObject
     {
 
-        public Space(Vector2 position, GameDevice gameDevice)
-            : base("", position, 32, 32, gameDevice)
+        public Space(Vector2 position,GameDevice gameDevice)
+            :base("", position,32,32,gameDevice)
         { }
 
         public Space(Space other)
-            : this(other.position, other.gameDevice)
+            :this(other.position ,other.gameDevice)
         { }
 
         public override object Clone()
         {
             return new Space(this);
         }
-
+        
         public override void Update(GameTime gameTime)
         {
         }
@@ -34,7 +34,7 @@ namespace WireGame_24.Actor
 
         public override void Draw(Renderer renderer)
         {
-
+            
         }
     }
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
 using WireGame_24.Device;
 
 namespace WireGame_24.Scene
 {
+    /// <summary>
+    /// シーンインタフェース
+    /// </summary>
     interface IScene
     {
         void Initialize();//初期化

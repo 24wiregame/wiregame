@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework;
+
 namespace WireGame_24.Util
 {
-
     /// <summary>
     /// 抽象タイマークラス
     /// </summary>
@@ -35,7 +35,7 @@ namespace WireGame_24.Util
         //抽象メソッド
         public abstract void Initialize();//初期化
 
-        public abstract void Update(GameTime gameTime);//更新
+        public abstract void Update( GameTime gameTime);//更新
 
         public abstract bool IsTime();//指定時間になったか？
 

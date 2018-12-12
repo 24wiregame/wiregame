@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WireGame_24.Device
 {
     class CSVReader
     {
-        private List<string[]> stringData;
+
+         List<string[]> stringData;
         public CSVReader()
         {
             stringData = new List<string[]>();
@@ -18,47 +20,60 @@ namespace WireGame_24.Device
             stringData.Clear();
         }
 
+
         public void Read(string filename, string path = "./")
         {
             Clear();
             try
             {
-                using (var sr = new System.IO.StreamReader(@"Content/" + path + filename))
+                using (var sr = new System.IO.StreamReader("Content/" + path + filename))
                 {
-                    while (!sr.EndOfStream)
+                    while(!sr.EndOfStream)
                     {
                         var line = sr.ReadLine();
                         var values = line.Split(',');
+
                         stringData.Add(values);
+
 #if DEBUG
                         foreach (var v in values)
                         {
                             System.Console.Write("{0}", v);
                         }
                         System.Console.WriteLine();
+
 #endif
+
+
                     }
                 }
             }
-            catch (System.Exception e)
+            catch(System.Exception e)
             {
                 System.Console.WriteLine(e.Message);
             }
+
+
         }
+
         public List<string[]> GetData()
         {
             return stringData;
         }
+
         public string[][] GetArrayData()
         {
             int count = stringData.Count;
             string[][] array = new string[count][];
+
             for (int i = 0; i < count; i++)
             {
                 array[i] = stringData[i];
             }
+
             return array;
         }
+
         public int[][] GetIntData()
         {
             int count = stringData.Count;
@@ -73,40 +88,43 @@ namespace WireGame_24.Device
                     array[i][j] = int.Parse(stringData[i][j]);
                 }
             }
+
             return array;
         }
-        public String[,] GetStringMatrix()
+
+        public string[,] GetStringMatrix()
         {
             var data = GetArrayData();
-            int y = data.Count();
-            int x = data[0].Count();
+            int row = data.Count();
+            int col = data[0].Count();
 
-            string[,] array = new string[y, x];
-            for (int i = 0; i < y; i++)
+            string[,] result = new string[row, col];
+            for (int y = 0; y< row;y++)
             {
-                for (int j = 0; j < x; j++)
+                for(int x = 0;x < col; x++)
                 {
-                    array[j, i] = data[j][i];
+                    result[y, x] = data[y][x];
                 }
             }
-            return array;
+
+            return result;
         }
 
-        public int[,] GetIntMatrix()
+        public int [,]GetIntMatrix()
         {
             var data = GetIntData();
-            int y = data.Count();
-            int x = data[0].Count();
+            int row = data.Count();
+            int col = data[0].Count();
 
-            int[,] array = new int[y, x];
-            for (int i = 0; i < y; i++)
+            int[,] result = new int[row, col];
+            for (int y = 0; y < row; y++)
             {
-                for (int j = 0; j < x; j++)
+                for (int x = 0; x < col; x++)
                 {
-                    array[j, i] = data[j][i];
+                    result[y, x] = data[y][x];
                 }
             }
-            return array;
+            return result;
         }
     }
 }

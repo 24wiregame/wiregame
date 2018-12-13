@@ -52,6 +52,7 @@
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Space.cs" />
     <Compile Include="Actor\TarGet.cs" />
+    <Compile Include="Actor\TarGetBlock.cs" />
     <Compile Include="Actor\Wire.cs" />
     <Compile Include="Def\Screen.cs" />
     <Compile Include="Device\BGMLoader.cs" />

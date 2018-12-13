@@ -11,6 +11,8 @@ using WireGame_24.Scene;
 using WireGame_24.Actor.Interface;
 namespace WireGame_24.Actor
 {
+    delegate void OnHit();
+
     class Player : GameObject, IApplicableDead
     {
         private IGameObjectMediator mediator;
@@ -19,6 +21,11 @@ namespace WireGame_24.Actor
         private bool isfall;
         private Vector2 originVelocty;
         private float gravity;
+
+        /// <summary>
+        /// 当たった時に行うイベント
+        /// </summary>
+        public OnHit OnHitEvent { get; set; }
 
         public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator)
             : base("player", position, 32, 32, gameDevice)
@@ -38,11 +45,10 @@ namespace WireGame_24.Actor
         }
         public override void Hit(GameObject gameObject)
         {
+            OnHitEvent.Invoke();
             if (gameObject is Bara)
             {
                 hitBlock(gameObject);
-                //isDeadFlag = true;
-
             }
             if (gameObject is Block )
             {
@@ -54,18 +60,10 @@ namespace WireGame_24.Actor
             }
 
         }
-            
 
-    
 
-        
         public override void Update(GameTime gameTime)
         {
-            //originVelocty *= 0.99f;
-            //position.X = position.X + velocity.X * speed + originVelocty.X;
-
-            //position.Y += velocity.Y + originVelocty.Y;
-
             if (position.Y > Screen.Height)
             {
                 isDeadFlag = true;
@@ -149,9 +147,7 @@ namespace WireGame_24.Actor
             Direction dir = this.CheckDirection(gameObject);
 
         }
-
         //死んだときの動きの大きさ
-
 
         public void Die()
         {

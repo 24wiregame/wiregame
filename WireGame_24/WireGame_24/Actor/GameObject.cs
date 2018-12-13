@@ -110,6 +110,7 @@ namespace WireGame_24.Actor
             return Direction.Top;
 
         }
+        
     }
 
 

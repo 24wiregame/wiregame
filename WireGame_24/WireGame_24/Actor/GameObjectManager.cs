@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using WireGame_24.Device;
 using WireGame_24.Scene;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 namespace WireGame_24.Actor
 {
     class GameObjectManager : IGameObjectMediator
@@ -61,18 +60,11 @@ namespace WireGame_24.Actor
         }
         private void hitToMap()
         {
-            if (map == null)
-            {
-                return;
-            }
+            if (map == null) return;
 
             foreach (var obj in gameObjectList)
             {
-                if(obj.IsDead())
-                {
-                    continue;
-                }
-                map.Hit(obj);
+                if (obj.IsDead()) continue;
             }
         }
         private void hitToGameObject()

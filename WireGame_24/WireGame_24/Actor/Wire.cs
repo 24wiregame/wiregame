@@ -31,17 +31,28 @@ namespace WireGame_24.Actor
 
         private Vector2 velocity;
 
+        private bool isHit;
+
         public Wire(Player player, TarGet tarGet)
         {
             this.player = player;
+            player.OnHitEvent += OnHit;
             this.tarGet = tarGet;
             wireTop = tarGet.GetPosition();
             isDraw = false;
             gravity = 0.5f;
         }
+
+        private void OnHit()
+        {
+            isHit = true;
+        }
+
         public void Update(GameTime gameTime)
         {
             // 重りの座標
+
+            
 
             ////////////////////////////////////////////////
             if (Input.GetKeyTrigger(Keys.A))
@@ -66,6 +77,12 @@ namespace WireGame_24.Actor
                 originLine = wireTop - originPosition;
                 originLength = originLine.Length();
                 originRotate = (float)Math.Atan2(originLine.Y, originLine.X);
+                if (isHit)
+                {
+                    isHit = false;
+                    rot_spd = 0;
+                    return;
+                }
 
 
                 isDraw = true;
@@ -107,6 +124,7 @@ namespace WireGame_24.Actor
             else
             {
                 isDraw = false;
+
 
             }
             if (Input.GetKeyRelease(Keys.A))

@@ -33,6 +33,8 @@ namespace WireGame_24.Actor
             objectList.Add("3", new Cushion(Vector2.Zero, gameDevice));
             //ジャンプ（ジャンプ台)
             objectList.Add("4", new Jump(Vector2.Zero, gameDevice));
+            //ターゲットブロック
+            objectList.Add("5", new TarGetBlock(Vector2.Zero, gameDevice));
 
             List<GameObject> workList = new List<GameObject>();
             int colCnt = 0;

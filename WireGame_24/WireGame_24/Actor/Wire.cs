@@ -16,7 +16,7 @@ namespace WireGame_24.Actor
         private float length;            //画像を引き延ばす長さ
         private float rotate;            //回転角度
         private Player player;
-        private TarGet tarGet;
+        private TarGetBlock tarGetBlock; //ターゲットブロック
 
         private bool isDraw;             //描画中かどうか
 
@@ -33,14 +33,21 @@ namespace WireGame_24.Actor
 
         private bool isHit;
 
-        public Wire(Player player, TarGet tarGet)
+        private bool isUse;
+
+        public Wire()
+        {
+            
+            isDraw = false;
+            gravity = 0.5f;
+
+            isUse = false;
+        }
+
+        public void SetPlayer(Player player)
         {
             this.player = player;
             player.OnHitEvent += OnHit;
-            this.tarGet = tarGet;
-            wireTop = tarGet.GetPosition();
-            isDraw = false;
-            gravity = 0.5f;
         }
 
         private void OnHit()
@@ -51,9 +58,7 @@ namespace WireGame_24.Actor
         public void Update(GameTime gameTime)
         {
             // 重りの座標
-
-            
-
+            isUse = false;
             ////////////////////////////////////////////////
             if (Input.GetKeyTrigger(Keys.A))
             {
@@ -72,6 +77,7 @@ namespace WireGame_24.Actor
 
             if (Input.GetKeyState(Keys.A))
             {
+                isUse = true;
                 //描画用の線
                 originPosition = player.GetPosition();
                 originLine = wireTop - originPosition;
@@ -108,7 +114,7 @@ namespace WireGame_24.Actor
                 if (sub > 180.0) sub -= 360.0;
                 rot_spd += (float)sub;
                 // 角度に角速度を加算
-                rot += rot_spd;
+                rot += rot_spd ;
                 // 新しい重りの位置
                 rad = rot * Math.PI / 180;
                 px = wireTop.X + Math.Cos(rad) * length;
@@ -124,8 +130,6 @@ namespace WireGame_24.Actor
             else
             {
                 isDraw = false;
-
-
             }
             if (Input.GetKeyRelease(Keys.A))
             {
@@ -135,6 +139,12 @@ namespace WireGame_24.Actor
             }
 
 
+        }
+
+        public void SetTarget(TarGetBlock block)
+        {
+            this.tarGetBlock = block;
+            wireTop = tarGetBlock.GetPosition();
         }
 
         public void Draw(Renderer renderer)
@@ -148,6 +158,10 @@ namespace WireGame_24.Actor
                 Vector2.Zero,
                 new Vector2(1, length));
             }
+        }
+        public bool IsUse()
+        {
+            return isUse;
         }
     }
 }

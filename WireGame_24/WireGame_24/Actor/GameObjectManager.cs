@@ -65,6 +65,8 @@ namespace WireGame_24.Actor
             foreach (var obj in gameObjectList)
             {
                 if (obj.IsDead()) continue;
+
+                map.Hit(obj);
             }
         }
         private void hitToGameObject()
@@ -144,6 +146,11 @@ namespace WireGame_24.Actor
 
         //    return (find == null || find.IsDead());
         //}
+
+        public TarGetBlock GetNearTarGet(Vector2 position)
+        {
+            return map.GetNearTarget(position);
+        }
     }
 }
 

@@ -36,7 +36,7 @@ namespace WireGame_24.Actor
             {
                 return;
             }
-            player.SetVelocity(new Vector2(10, -10));
+            player.SetVelocity(new Vector2(10, -20));
         }
     }
 }

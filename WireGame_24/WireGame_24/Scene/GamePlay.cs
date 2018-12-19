@@ -47,7 +47,6 @@ namespace WireGame_24.Scene
             //player.Draw(renderer);
             gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
-            tarGet.Draw(renderer);
             renderer.End();
         }
 
@@ -56,10 +55,10 @@ namespace WireGame_24.Scene
         /// </summary>
         public void Initialize()
         {
+            wire = new Wire();
             player = new Player(new Vector2(32 * 2, 32 * 12),
-               GameDevice.Instance(), gameObjectManager);
-            tarGet = new TarGet(new Vector2(800, 300), gameDevice);
-            wire = new Wire(player, tarGet);
+               GameDevice.Instance(), gameObjectManager,wire);
+            wire.SetPlayer(player);
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
@@ -102,7 +101,7 @@ namespace WireGame_24.Scene
         /// <param name="gameTime">ゲーム時間</param>
         public void Update(GameTime gameTime)
         {
-            wire.Update(gameTime);
+            //wire.Update(gameTime);
             if (Input.GetKeyTrigger(Keys.D1))
             {
                 isEndFlag = true;
@@ -113,7 +112,9 @@ namespace WireGame_24.Scene
             }
             //更新処理
             map.Update(gameTime);
+            wire.Update(gameTime);
             player.Update(gameTime);
+            
             if (player.IsDead())
             {
                 return;

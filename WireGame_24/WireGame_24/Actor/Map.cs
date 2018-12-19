@@ -12,11 +12,13 @@ namespace WireGame_24.Actor
     class Map
     {
         private List<List<GameObject>> mapList;
+        private List<TarGetBlock> tarGetBlocks;
         private GameDevice gameDevice;
 
         public Map(GameDevice gameDevice)
         {
             mapList = new List<List<GameObject>>();
+            tarGetBlocks = new List<TarGetBlock>();
             this.gameDevice = gameDevice;
         }
 
@@ -43,6 +45,11 @@ namespace WireGame_24.Actor
                 try
                 {
                     GameObject work = (GameObject)objectList[s].Clone();
+                    if(work is TarGetBlock)
+                    {
+                        tarGetBlocks.Add(work as TarGetBlock);
+                    }
+
                     work.SetPosition(new Vector2(colCnt * work.GetHeight(),
                         lineCnt * work.GetWidht()));
                     workList.Add(work);
@@ -137,6 +144,26 @@ namespace WireGame_24.Actor
                     obj.Draw(renderer);
                 }
             }
+        }
+
+        public TarGetBlock GetNearTarget(Vector2 position)
+        {
+            float distance = float.MaxValue;
+            TarGetBlock nearTarget = null;
+            foreach (var tl in tarGetBlocks)
+            {
+                float length = (position - tl.GetPosition()).LengthSquared();
+            
+               
+                if(distance > length)
+                {
+                    distance = length;
+                    nearTarget = tl;
+                }
+            }
+            return nearTarget;
+            
+
         }
     }
 }

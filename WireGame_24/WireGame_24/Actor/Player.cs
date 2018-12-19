@@ -21,21 +21,23 @@ namespace WireGame_24.Actor
         private bool isfall;
         private Vector2 originVelocty;
         private float gravity;
+        private Wire wire;
 
         /// <summary>
         /// 当たった時に行うイベント
         /// </summary>
         public OnHit OnHitEvent { get; set; }
 
-        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator)
+        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire)
             : base("player", position, 32, 32, gameDevice)
         {
             velocity = Vector2.Zero;
             isJump = true;
             this.mediator = mediator;
+            this.wire = wire;
         }
         public Player(Player other)
-            : this(other.position, other.gameDevice, other.mediator)
+            : this(other.position, other.gameDevice, other.mediator,other.wire)
         {
 
         }
@@ -58,7 +60,6 @@ namespace WireGame_24.Actor
             {
                 hitBlock(gameObject);
             }
-
         }
 
 
@@ -68,36 +69,57 @@ namespace WireGame_24.Actor
             {
                 isDeadFlag = true;
                 isfall = true;
-
             }
 
             if((isJump == false)&&
                 (Input.GetKeyTrigger(Keys.Space)||
                 Input.GetKeyTrigger(PlayerIndex.One, Buttons.B)))
             {
-                velocity.Y = -8.0f;
-                isJump = true;
+                JumpStart();
             }
-            else
-            {
-                velocity.Y = velocity.Y + 0.4f;
-                velocity.Y = (velocity.Y > 16.0f) ? (16.0f) : (velocity.Y);
-            }
-            float speed = 4.0f;
-            if (Input.GetKeyState(Keys.Z))
-            {
+            
 
-                speed = 8.0f;
+            float speed = 4.0f;
+            if (!wire.IsUse())
+            {
+                UseGravity();
+
+                wire.SetTarget(((GameObjectManager)mediator).GetNearTarGet(position));
             }
             velocity.X = Input.Velocity().X * speed;
-            float inputVelocity = Input.Velocity().X;
-            velocity.X = Input.Velocity().X * speed +
-               Input.Velocity(PlayerIndex.One).X * speed;
+            UpdateWireVelocity();
+           // float inputVelocity = Input.Velocity().X;
+            //velocity.X = Input.Velocity().X * speed +
+              // Input.Velocity(PlayerIndex.One).X * speed;
              position = position + velocity;
             Console.WriteLine("Velocity:"+velocity);
             //プレイヤーの位置を画面の中心に位置補正する
             setDisplayModify();
         }
+        private void UseGravity()
+        {
+            velocity.Y = velocity.Y + 0.4f;
+            //velocity.Y = MathHelper.Min(velocity.Y, 16);
+        }
+
+        private void JumpStart()
+        {
+            velocity.Y = -8.0f;
+            isJump = true;
+        }
+
+        private void UpdateWireVelocity()
+        {
+            if (originVelocty.LengthSquared() <= 0.1f)
+            {
+                originVelocty = Vector2.Zero;
+            }
+            //ワイヤーを離した時の反動(調節可)
+            velocity += originVelocty;
+            originVelocty.X *= 0.99f;
+            originVelocty.Y *= 0.05f;
+        }
+
         private void hitBlock(GameObject gameObject)
         {
             Direction dir = this.CheckDirection(gameObject);
@@ -161,16 +183,13 @@ namespace WireGame_24.Actor
         public void SetVelocity(Vector2 velocity)
         {
             this.velocity = velocity;
-
         }
-        //public bool IsDead()
-        //{
-        //    return isDeadFlag;
-        //}
+
         public void Initialize()
         {
             gravity = 0.5f;
             isJump = false;
+            originVelocty = Vector2.Zero;
         }
         public void SetPositionX(float positionX)
         {
@@ -180,9 +199,9 @@ namespace WireGame_24.Actor
         {
             position.Y = positionY;
         }
-        public float GetVeloity()
+        public Vector2 GetVeloity()
         {
-            return velocity.X;
+            return velocity;
         }
         public void SetJump(bool flg)
         {
@@ -192,5 +211,7 @@ namespace WireGame_24.Actor
         {
             originVelocty = velocity;
         }
+        
+        
     }
 }

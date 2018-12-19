@@ -19,6 +19,7 @@ namespace WireGame_24.Scene
         private bool isEndFlag;//終了フラグ
         private Map map;
         private Player player;
+        private Player player2;
         private TarGet tarGet;            //ターゲット
         private Wire wire;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
@@ -45,6 +46,10 @@ namespace WireGame_24.Scene
             map.Draw(renderer);
             player.Draw(renderer);
             //player.Draw(renderer);
+            if (GameData.playerNumber == 2)
+            {
+                player2.Draw(renderer);
+            }
             gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
             renderer.End();
@@ -58,12 +63,17 @@ namespace WireGame_24.Scene
             wire = new Wire();
             player = new Player(new Vector2(32 * 2, 32 * 12),
                GameDevice.Instance(), gameObjectManager,wire);
+            if (GameData.playerNumber == 2)
+            {
+                player2 = new Player(new Vector2(32 * 1, 32 * 12),
+                GameDevice.Instance(), gameObjectManager, wire);
+            }
             wire.SetPlayer(player);
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("stage001.csv");
+            map.Load("stage" + GameData.stageNumber.ToString().PadLeft(3, '0') + ".csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
            
@@ -120,6 +130,15 @@ namespace WireGame_24.Scene
                 return;
             }
             map.Hit(player);
+            if (GameData.playerNumber == 2)
+            {
+                player2.Update(gameTime);
+                if (player2.IsDead())
+                {
+                    return;
+                }
+                map.Hit(player2);
+            }
         }
     }
 }

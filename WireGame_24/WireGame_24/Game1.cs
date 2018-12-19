@@ -56,6 +56,8 @@ namespace WireGame_24
             sceneManager = new SceneManager();
             sceneManager.Add(Scene.Scene.Load, new LoadScene());
             sceneManager.Add(Scene.Scene.Title, new Title());
+            sceneManager.Add(Scene.Scene.PlayerSelect, new PlayerSelect());
+            sceneManager.Add(Scene.Scene.SceneSelect, new SceneSelect());
             sceneManager.Change(Scene.Scene.Load);
             sceneManager.Add(Scene.Scene.GamePlay, new GamePlay());
             sceneManager.Add(Scene.Scene.Ending, new Ending());

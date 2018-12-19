@@ -37,7 +37,7 @@ namespace WireGame_24.Scene
 
         public Scene Next()
         {
-            Scene nextScene = Scene.GamePlay;
+            Scene nextScene = Scene.PlayerSelect;
             return nextScene;
         }
 

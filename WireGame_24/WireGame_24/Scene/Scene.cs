@@ -13,6 +13,8 @@ namespace WireGame_24.Scene
     {
         Load,
         Title,
+        PlayerSelect,
+        SceneSelect,
         GamePlay,
         Ending,
     }

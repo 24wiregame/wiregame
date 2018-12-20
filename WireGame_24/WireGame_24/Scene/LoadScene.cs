@@ -52,6 +52,9 @@ namespace WireGame_24.Scene
                 { "puddle", path},
                 { "Bara", path},
                 {"kariT", path },
+                {"cursor",path },
+                {"stage",path },
+                {"01or02",path },
 
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 

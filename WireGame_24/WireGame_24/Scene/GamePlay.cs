@@ -22,6 +22,7 @@ namespace WireGame_24.Scene
         private TarGet tarGet;            //ターゲット
         private Wire wire;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
+        private Goal goal;       //ゴール
 
         /// <summary>
         /// コンストラクタ
@@ -43,10 +44,10 @@ namespace WireGame_24.Scene
             renderer.Begin();
             // renderer.DrawTexture("black", Vector2.Zero);
             map.Draw(renderer);
-            player.Draw(renderer);
-            //player.Draw(renderer);
-            gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
+            player.Draw(renderer);
+            gameObjectManager.Draw(renderer);
+           
             renderer.End();
         }
 
@@ -110,11 +111,14 @@ namespace WireGame_24.Scene
             {
                 isEndFlag = true;
             }
+            if (player.IsGoalFlag())
+            {
+                isEndFlag = true;
+            }
             //更新処理
             map.Update(gameTime);
-            wire.Update(gameTime);
             player.Update(gameTime);
-            
+            wire.Update(gameTime);
             if (player.IsDead())
             {
                 return;

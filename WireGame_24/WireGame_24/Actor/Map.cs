@@ -37,6 +37,8 @@ namespace WireGame_24.Actor
             objectList.Add("4", new Jump(Vector2.Zero, gameDevice));
             //ターゲットブロック
             objectList.Add("5", new TarGetBlock(Vector2.Zero, gameDevice));
+            //ゴール
+            objectList.Add("6", new Goal(Vector2.Zero, gameDevice));
 
             List<GameObject> workList = new List<GameObject>();
             int colCnt = 0;
@@ -109,10 +111,10 @@ namespace WireGame_24.Actor
             Range yRange = new Range(0, mapList.Count() - 1);
             Range xRange = new Range(0, mapList[0].Count() - 1);
 
-            for (int row = y - 1; row <= (y + 1); row++)
+            for (int row = y - 1; row <= (y + 1) && yRange.IsWithin(row); row++)
             {
                  xRange = new Range(0, mapList[row].Count() - 1);
-                for (int col = x - 1; col <= (x + 1); col++)
+                for (int col = x - 1; col <= (x + 1) && xRange.IsWithin(col); col++)
                 {
                     if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))
                     {

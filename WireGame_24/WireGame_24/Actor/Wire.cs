@@ -53,10 +53,13 @@ namespace WireGame_24.Actor
         private void OnHit()
         {
             isHit = true;
+            rot_spd = 0;
+
         }
 
         public void Update(GameTime gameTime)
         {
+           
             // 重りの座標
             isUse = false;
             ////////////////////////////////////////////////
@@ -70,7 +73,13 @@ namespace WireGame_24.Actor
                         player.GetPosition().Y - wireTop.Y,
                         player.GetPosition().X - wireTop.X)
                     );
-                rot_spd = 0;
+                //rot_spd = 0;
+                Console.WriteLine("trigger");
+
+                rot_spd = (float)(180 - 2 * Math.Acos(player.GetVeloity().Length() / (2 * length)) * 180 / Math.PI);
+                rot_spd *= Math.Sign(tarGetBlock.GetPosition().Y - player.GetPosition().Y) * Math.Sign(player.GetVeloity().X);
+                Console.WriteLine("WireHit!!!!!");
+                return;
             }
 
 
@@ -83,13 +92,9 @@ namespace WireGame_24.Actor
                 originLine = wireTop - originPosition;
                 originLength = originLine.Length();
                 originRotate = (float)Math.Atan2(originLine.Y, originLine.X);
-                if (isHit)
-                {
-                    isHit = false;
-                    rot_spd = 0;
-                    return;
-                }
+                Vector2 playerVelocity = player.GetVeloity();
 
+                Console.WriteLine("RotSpd:"+rot_spd+" /PlayerSpd:"+playerVelocity);
 
                 isDraw = true;
                 rotate = (float)Math.Atan2(line.Y, line.X);
@@ -113,8 +118,9 @@ namespace WireGame_24.Actor
                 if (sub < -180.0) sub += 360.0;
                 if (sub > 180.0) sub -= 360.0;
                 rot_spd += (float)sub;
+                rot_spd *= 0.999f;
                 // 角度に角速度を加算
-                rot += rot_spd ;
+                rot += rot_spd;
                 // 新しい重りの位置
                 rad = rot * Math.PI / 180;
                 px = wireTop.X + Math.Cos(rad) * length;
@@ -123,6 +129,8 @@ namespace WireGame_24.Actor
 
                 velocity = new Vector2((float)px - player.GetPosition().X, (float)py - player.GetPosition().Y);
 
+                player.SetVelocity(new Vector2());
+                //player.SetVelocity(velocity);
                 player.SetPositionX((float)px);
                 player.SetPositionY((float)py);
                 player.SetJump(false);
@@ -133,7 +141,8 @@ namespace WireGame_24.Actor
             }
             if (Input.GetKeyRelease(Keys.A))
             {
-                player.SetSpeed(velocity);
+                player.SetVelocity(velocity);
+                Console.WriteLine("こここここここここｋ"+ velocity);
                 player.SetJump(true);
 
             }
@@ -146,14 +155,14 @@ namespace WireGame_24.Actor
             this.tarGetBlock = block;
             wireTop = tarGetBlock.GetPosition();
         }
-
+        
         public void Draw(Renderer renderer)
         {
             if (isDraw)
             {
                 renderer.DrawTexture(
                 "pointer",
-                wireTop,　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
+                wireTop +new Vector2(16,16) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
                 originRotate + (float)Math.PI / 2.0f,
                 Vector2.Zero,
                 new Vector2(1, length));
@@ -162,6 +171,10 @@ namespace WireGame_24.Actor
         public bool IsUse()
         {
             return isUse;
+        }
+        public Vector2 GetVelocity()
+        {
+            return velocity;
         }
     }
 }

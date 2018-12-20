@@ -19,10 +19,10 @@ namespace WireGame_24.Scene
         private bool isEndFlag;//終了フラグ
         private Map map;
         private Player player;
-        private Player player2;
         private TarGet tarGet;            //ターゲット
         private Wire wire;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
+        private Goal goal;       //ゴール
 
         /// <summary>
         /// コンストラクタ
@@ -44,14 +44,10 @@ namespace WireGame_24.Scene
             renderer.Begin();
             // renderer.DrawTexture("black", Vector2.Zero);
             map.Draw(renderer);
-            player.Draw(renderer);
-            //player.Draw(renderer);
-            if (GameData.playerNumber == 2)
-            {
-                player2.Draw(renderer);
-            }
-            gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
+            player.Draw(renderer);
+            gameObjectManager.Draw(renderer);
+           
             renderer.End();
         }
 
@@ -63,17 +59,12 @@ namespace WireGame_24.Scene
             wire = new Wire();
             player = new Player(new Vector2(32 * 2, 32 * 12),
                GameDevice.Instance(), gameObjectManager,wire);
-            if (GameData.playerNumber == 2)
-            {
-                player2 = new Player(new Vector2(32 * 1, 32 * 12),
-                GameDevice.Instance(), gameObjectManager, wire);
-            }
             wire.SetPlayer(player);
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("stage" + GameData.stageNumber.ToString().PadLeft(3, '0') + ".csv");
+            map.Load("stage001.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
            
@@ -120,25 +111,19 @@ namespace WireGame_24.Scene
             {
                 isEndFlag = true;
             }
+            if (player.IsGoalFlag())
+            {
+                isEndFlag = true;
+            }
             //更新処理
             map.Update(gameTime);
-            wire.Update(gameTime);
             player.Update(gameTime);
-            
+            wire.Update(gameTime);
             if (player.IsDead())
             {
                 return;
             }
             map.Hit(player);
-            if (GameData.playerNumber == 2)
-            {
-                player2.Update(gameTime);
-                if (player2.IsDead())
-                {
-                    return;
-                }
-                map.Hit(player2);
-            }
         }
     }
 }

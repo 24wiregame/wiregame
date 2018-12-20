@@ -22,6 +22,7 @@ namespace WireGame_24.Actor
         private Vector2 originVelocty;
         private float gravity;
         private Wire wire;
+        private bool isGoalFlag;
 
         /// <summary>
         /// 当たった時に行うイベント
@@ -47,7 +48,6 @@ namespace WireGame_24.Actor
         }
         public override void Hit(GameObject gameObject)
         {
-            OnHitEvent.Invoke();
             if (gameObject is Bara)
             {
                 hitBlock(gameObject);
@@ -60,6 +60,12 @@ namespace WireGame_24.Actor
             {
                 hitBlock(gameObject);
             }
+            OnHitEvent.Invoke();
+            if (gameObject is Goal)
+            {
+                isGoalFlag = true;
+            }
+            
         }
 
 
@@ -77,29 +83,31 @@ namespace WireGame_24.Actor
             {
                 JumpStart();
             }
-            
-
             float speed = 4.0f;
+            
             if (!wire.IsUse())
             {
                 UseGravity();
-
                 wire.SetTarget(((GameObjectManager)mediator).GetNearTarGet(position));
             }
-            velocity.X = Input.Velocity().X * speed;
-            UpdateWireVelocity();
-           // float inputVelocity = Input.Velocity().X;
+            //UpdateWireVelocity();
+            // float inputVelocity = Input.Velocity().X;
             //velocity.X = Input.Velocity().X * speed +
-              // Input.Velocity(PlayerIndex.One).X * speed;
-             position = position + velocity;
+            // Input.Velocity(PlayerIndex.One).X * speed;
+            position = position+velocity;
             Console.WriteLine("Velocity:"+velocity);
+
+            if (Math.Abs(Input.Velocity().X) > float.Epsilon)
+            {
+                velocity.X = Input.Velocity().X * speed;
+            }
             //プレイヤーの位置を画面の中心に位置補正する
             setDisplayModify();
+            
         }
         private void UseGravity()
         {
             velocity.Y = velocity.Y + 0.4f;
-            //velocity.Y = MathHelper.Min(velocity.Y, 16);
         }
 
         private void JumpStart()
@@ -112,12 +120,16 @@ namespace WireGame_24.Actor
         {
             if (originVelocty.LengthSquared() <= 0.1f)
             {
-                originVelocty = Vector2.Zero;
+               originVelocty = Vector2.Zero;
             }
             //ワイヤーを離した時の反動(調節可)
             velocity += originVelocty;
             originVelocty.X *= 0.99f;
             originVelocty.Y *= 0.05f;
+            
+            // velocity = wire.GetVelocity() * new Vector2(0.99f, 0.99f);
+            Console.WriteLine("ああああああああああああああ" + velocity);
+
         }
 
         private void hitBlock(GameObject gameObject)
@@ -162,7 +174,7 @@ namespace WireGame_24.Actor
             if(position.X < (Screen.Width / 2-width / 2) )
             {
                 gameDevice.SetDisplayModify(Vector2.Zero);
-           }
+            }
         }
         private void setSlideModify(GameObject gameObject)
         {
@@ -211,7 +223,14 @@ namespace WireGame_24.Actor
         {
             originVelocty = velocity;
         }
-        
+        public Vector2 GetOriginVl()
+        {
+            return originVelocty;
+        }
+        public bool IsGoalFlag()
+        {
+            return isGoalFlag;
+        }
         
     }
 }

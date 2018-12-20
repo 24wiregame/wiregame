@@ -10,7 +10,7 @@ namespace WireGame_24.Actor
 {
     class Goal : GameObject
     {
-        public Goal(Vector2 position, GameDevice gameDevice) : base("", position, 32, 32, gameDevice)
+        public Goal(Vector2 position, GameDevice gameDevice) : base("red", position, 32, 32, gameDevice)
         {
         }
         public Goal(Goal other) : this(other.position, other.gameDevice)
@@ -28,8 +28,8 @@ namespace WireGame_24.Actor
         public override void Update(GameTime gameTime)
         {
         }
-        public override void Draw(Renderer renderer)
-        {
-        }
+        //public override void Draw(Renderer renderer)
+        //{
+        //}
     }
 }

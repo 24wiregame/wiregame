@@ -64,5 +64,9 @@ namespace WireGame_24.Util
         {
             return 1.0f - currentTime / limitTime;
         }
+        public override void ShutDown()
+        {
+           
+        }
     }
 }

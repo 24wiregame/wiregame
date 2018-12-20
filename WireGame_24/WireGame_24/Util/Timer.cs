@@ -15,6 +15,10 @@ namespace WireGame_24.Util
     {
         protected float limitTime; //制限時間
         protected float currentTime;//現在の時間
+        private int score;//合計得点
+        private int poolScore;//一時の保存用プールの合計得点
+
+
 
         /// <summary>
         /// /コンストラクタ
@@ -62,5 +66,17 @@ namespace WireGame_24.Util
         /// </summary>
         /// <returns></returns>
         public abstract float Rate();
+
+        public abstract void ShutDown();
+        //public int GetScore()
+        //{
+        //    int currentScore = score + poolScore;
+        //    if (currentScore < 0)
+        //    {
+        //        currentScore = 0;
+        //    }
+        //    return currentScore;
+        //}
+
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="Util\CountUpTimer.cs" />
     <Compile Include="Util\Motion.cs" />
     <Compile Include="Util\Range.cs" />
+    <Compile Include="Util\ScoreMediator.cs" />
     <Compile Include="Util\Timer.cs" />
     <Compile Include="Scene\Ending.cs" />
     <Compile Include="Scene\GamePlay.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Scene\Title.cs" />
+    <Compile Include="Util\TimerUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

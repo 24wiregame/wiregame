@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using WireGame_24.Device;
 using Microsoft.Xna.Framework.Input;
+using WireGame_24.Util;
 
 
 namespace WireGame_24.Scene
@@ -16,24 +17,41 @@ namespace WireGame_24.Scene
     class Ending : IScene
     {
         private bool isEndFlag;//終了フラグ
+        private TimerUI timer;
+        
+        IScene backGrouneScene;
+        private TimerUI maxscore;
+        
+     
+
+      
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public Ending( )
+        public Ending(IScene scene)
         {
-            isEndFlag = false;     
-        }
+            backGrouneScene = scene;
+            isEndFlag = false;
+            //maxscore = new TimerUI();
+            
+           
 
+        }
+       
         /// <summary>
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
         public void Draw(Renderer renderer)
         {
+
             renderer.Begin();
             renderer.DrawTexture("block", Vector2.Zero);
             renderer.DrawTexture("black", new Vector2 (32, 0));
+            timer.Draw2(renderer);
+            
+            maxscore.Draw3(renderer);
             renderer.End();
         }
 
@@ -44,6 +62,19 @@ namespace WireGame_24.Scene
         public void Initialize()
         {
             isEndFlag = false;
+
+            timer = ((GamePlay)backGrouneScene).returnScore();
+           
+            if (maxscore==null)
+            {
+                maxscore = timer;
+            }
+            if (timer.GetScore() < maxscore.GetScore())
+            {
+                maxscore = timer;
+            }
+           
+
         }
 
         /// <summary>
@@ -82,6 +113,7 @@ namespace WireGame_24.Scene
             {
                 isEndFlag = true;
             }
+          
         }
     }
 }

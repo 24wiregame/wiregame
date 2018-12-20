@@ -12,6 +12,8 @@ namespace WireGame_24.Util
     /// </summary>
     class CountUpTimer : Timer
     {
+        private int score;//得点
+        private int poolScore;
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -63,5 +65,17 @@ namespace WireGame_24.Util
         {
             return currentTime / limitTime;
         }
+        public override void ShutDown()
+        {
+            score += poolScore;
+            if (score < 0)
+            {
+                score = 0;
+            }
+
+            poolScore = 0;
+        }
+       
+
     }
 }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using WireGame_24.Device;
 
+using WireGame_24.Util; 
+
 namespace WireGame_24.Scene
 {
     /// <summary>
@@ -17,14 +19,18 @@ namespace WireGame_24.Scene
         private Dictionary<Scene, IScene> scenes = new Dictionary<Scene, IScene>();
         //現在のシーン
         private IScene currentScene = null;
-
+        private TimerUI maxscore;
+        
+        
 
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public SceneManager()
-        { }
+        {
+            
+        }
 
         /// <summary>
         /// シーンの追加
@@ -103,5 +109,6 @@ namespace WireGame_24.Scene
             //現在のシーンを描画
             currentScene.Draw(renderer);
         }
+      
     }
 }

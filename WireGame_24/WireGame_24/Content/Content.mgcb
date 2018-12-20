@@ -217,3 +217,6 @@
 /processorParam:TextureFormat=Color
 /build:Texture/red.bmp
 
+#begin stage01a.csv
+/copy:stage01a.csv
+

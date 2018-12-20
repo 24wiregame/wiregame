@@ -64,7 +64,7 @@ namespace WireGame_24.Scene
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("stage001.csv");
+            map.Load("stage01a.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
            

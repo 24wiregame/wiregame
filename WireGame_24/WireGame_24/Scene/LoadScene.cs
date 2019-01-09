@@ -58,6 +58,9 @@ namespace WireGame_24.Scene
                 {"number",path },
                 {"score",path },
 
+                {"red",path },
+
+
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 
 

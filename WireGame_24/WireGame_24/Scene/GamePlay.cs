@@ -8,6 +8,7 @@ using WireGame_24.Device;
 using Microsoft.Xna.Framework.Input;
 using WireGame_24.Actor;
 using WireGame_24.Scene;
+using WireGame_24.Util;
 namespace WireGame_24.Scene
 {
     /// <summary>
@@ -23,6 +24,12 @@ namespace WireGame_24.Scene
         private Wire wire;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
         private Goal goal;       //ゴール
+        private Timer timer;
+        private TimerUI timerUI;//スコア
+  
+
+
+
 
         /// <summary>
         /// コンストラクタ
@@ -32,8 +39,10 @@ namespace WireGame_24.Scene
             isEndFlag = false;
             gameObjectManager = new GameObjectManager();
             var gameDevice = GameDevice.Instance();
+           
             //player = new Player(new Vector2(32 * 2, 32 * 12), GameDevice.Instance());
         }
+  
 
         /// <summary>
         /// 描画
@@ -43,11 +52,15 @@ namespace WireGame_24.Scene
         {
             renderer.Begin();
             // renderer.DrawTexture("black", Vector2.Zero);
+           
             map.Draw(renderer);
             wire.Draw(renderer);
             player.Draw(renderer);
             gameObjectManager.Draw(renderer);
-           
+            wire.Draw(renderer);
+            
+            timerUI.Draw(renderer);
+
             renderer.End();
         }
 
@@ -67,7 +80,11 @@ namespace WireGame_24.Scene
             map.Load("stage01a.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
+
+            timer = new CountUpTimer(100);
+            timerUI = new TimerUI(timer);
            
+
         }
 
         /// <summary>
@@ -85,7 +102,12 @@ namespace WireGame_24.Scene
         /// <returns>次のシーン名</returns>
         public Scene Next()
         {
-            Scene nextScene = Scene.Ending;        
+            Scene nextScene = Scene.Ending;
+            if (timerUI.GetScore() >= 0)
+            {
+                //nextScene = Scene.Ending;
+            }
+
             return nextScene;
         }
 
@@ -102,7 +124,14 @@ namespace WireGame_24.Scene
         /// <param name="gameTime">ゲーム時間</param>
         public void Update(GameTime gameTime)
         {
+
             //wire.Update(gameTime);
+
+            timer.Update(gameTime);
+           
+ 
+           
+
             if (Input.GetKeyTrigger(Keys.D1))
             {
                 isEndFlag = true;
@@ -121,9 +150,23 @@ namespace WireGame_24.Scene
             wire.Update(gameTime);
             if (player.IsDead())
             {
+                timer.ShutDown();
                 return;
             }
             map.Hit(player);
+
+            if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
+            {
+
+                isEndFlag = true;
+                timer.ShutDown();
+
+            }
         }
+        public TimerUI returnScore()
+        {
+            return timerUI ;
+        }
+
     }
 }

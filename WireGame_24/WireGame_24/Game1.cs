@@ -59,8 +59,9 @@ namespace WireGame_24
             sceneManager.Add(Scene.Scene.PlayerSelect, new PlayerSelect());
             sceneManager.Add(Scene.Scene.SceneSelect, new SceneSelect());
             sceneManager.Change(Scene.Scene.Load);
-            sceneManager.Add(Scene.Scene.GamePlay, new GamePlay());
-            sceneManager.Add(Scene.Scene.Ending, new Ending());
+            IScene addScene = new GamePlay();
+            sceneManager.Add(Scene.Scene.GamePlay, addScene);
+            sceneManager.Add(Scene.Scene.Ending, new Ending(addScene));
             sceneManager.Change(Scene.Scene.Load);
 
             CSVReader csvReader = new CSVReader();

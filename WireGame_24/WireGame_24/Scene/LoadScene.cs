@@ -57,10 +57,27 @@ namespace WireGame_24.Scene
                 {"01or02",path },
                 {"number",path },
                 {"score",path },
-
+                {"sikaku",path },
                 {"red",path },
-
-
+                {"SB_1",path },
+                {"SB_2",path },
+                {"SB_3",path },
+                {"SB_4",path },
+                {"SB_5",path },
+                {"SB_6",path },
+                {"TG_green",path },
+                {"TG_yellow",path },
+                {"TG_black",path },
+                {"DB",path },
+                {"DB_1",path },
+                {"DB_2",path },
+                {"JB_1",path },
+                {"JB_2",path },
+                {"JB_3",path },
+                {"JB_4",path },
+                {"JB_5",path },
+                {"JB_6",path },
+                {"back_1",path },
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 
 

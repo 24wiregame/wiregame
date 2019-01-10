@@ -162,7 +162,9 @@ namespace WireGame_24.Actor
                     distance = length;
                     nearTarget = tl;
                 }
+                
             }
+            
             return nearTarget;
             
 

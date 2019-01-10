@@ -10,8 +10,9 @@ namespace WireGame_24.Actor
 {
     class TarGetBlock : GameObject
     {
+
         public TarGetBlock(Vector2 position, GameDevice gameDevice)
-           : base("kariT", position, 32, 32, gameDevice)
+           : base("TG_black", position, 32, 32, gameDevice)
         { }
 
         public TarGetBlock(TarGetBlock other)
@@ -22,9 +23,15 @@ namespace WireGame_24.Actor
         {
             return new TarGetBlock(this);
         }
+        public void Initialize()
+        {
+            name = "TG_black";
+        }
 
+        
         public override void Update(GameTime gameTime)
         {
+            //SetName("TG_black");
         }
 
         public override void Hit(GameObject gameObject)
@@ -35,5 +42,9 @@ namespace WireGame_24.Actor
         //{
 
         //}
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace WireGame_24.Actor
         public OnHit OnHitEvent { get; set; }
 
         public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire)
-            : base("player", position, 32, 32, gameDevice)
+            : base("sikaku", position, 32, 32, gameDevice)
         {
             velocity = Vector2.Zero;
             isJump = true;
@@ -96,11 +96,7 @@ namespace WireGame_24.Actor
             // Input.Velocity(PlayerIndex.One).X * speed;
             position = position+velocity;
             Console.WriteLine("Velocity:"+velocity);
-
-            if (Math.Abs(Input.Velocity().X) > float.Epsilon)
-            {
-                velocity.X = Input.Velocity().X * speed;
-            }
+            
             //プレイヤーの位置を画面の中心に位置補正する
             setDisplayModify();
             

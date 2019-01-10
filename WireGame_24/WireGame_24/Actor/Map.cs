@@ -30,11 +30,16 @@ namespace WireGame_24.Actor
       　　　//ブロック
             objectList.Add("1", new Block(Vector2.Zero, gameDevice));
             //バラ（DeathBlock）
-            objectList.Add("2", new Bara(Vector2.Zero, gameDevice));
+            objectList.Add("2", new Bara("DB_1",Vector2.Zero, gameDevice));
+            objectList.Add("7", new Bara("DB_2", Vector2.Zero, gameDevice));
             //クッション（吸収ブロック)
-            objectList.Add("3", new Cushion(Vector2.Zero, gameDevice));
+            objectList.Add("3", new Cushion("CB_1",Vector2.Zero, gameDevice));
+            objectList.Add("8", new Cushion("CB_2", Vector2.Zero, gameDevice));
+            objectList.Add("9", new Cushion("CB_3", Vector2.Zero, gameDevice));
+            objectList.Add("10", new Cushion("CB_4", Vector2.Zero, gameDevice));
             //ジャンプ（ジャンプ台)
-            objectList.Add("4", new Jump(Vector2.Zero, gameDevice));
+            objectList.Add("4", new Jump("JB_7",Vector2.Zero, gameDevice));
+            objectList.Add("11", new Jump("JB_2", Vector2.Zero, gameDevice));
             //ターゲットブロック
             objectList.Add("5", new TarGetBlock(Vector2.Zero, gameDevice));
             //ゴール

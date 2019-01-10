@@ -10,12 +10,12 @@ namespace WireGame_24.Actor
 {
     class Bara : GameObject
     {
-        public Bara(Vector2 position, GameDevice gameDevice)
-            : base("Bara", position, 32, 32, gameDevice)
+        public Bara(string name, Vector2 position, GameDevice gameDevice)
+            : base(name, position, 32, 32, gameDevice)
         { }
 
         public Bara(Bara other)
-            : this(other.position, other.gameDevice)
+            : this(other.name,other.position, other.gameDevice)
         {
         }
 

@@ -51,7 +51,7 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            // renderer.DrawTexture("black", Vector2.Zero);
+             renderer.DrawTexture("back_1" ,Vector2.Zero);
            
             map.Draw(renderer);
             wire.Draw(renderer);
@@ -77,7 +77,7 @@ namespace WireGame_24.Scene
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("stage01a.csv");
+            map.Load("stage02.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
 

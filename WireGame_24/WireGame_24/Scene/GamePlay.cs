@@ -20,8 +20,10 @@ namespace WireGame_24.Scene
         private bool isEndFlag;//終了フラグ
         private Map map;
         private Player player;
+        private Player2 player2;
         private TarGet tarGet;            //ターゲット
         private Wire wire;        //ワイヤー
+        private Wire2 wire2;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
         private Goal goal;       //ゴール
         private Timer timer;
@@ -58,7 +60,12 @@ namespace WireGame_24.Scene
             player.Draw(renderer);
             gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
-            
+            if (GameData.playerNumber == 2)
+            {
+                player2.Draw(renderer);
+                wire2.Draw(renderer);
+            }
+
             timerUI.Draw(renderer);
 
             renderer.End();
@@ -73,6 +80,14 @@ namespace WireGame_24.Scene
             player = new Player(new Vector2(32 * 2, 32 * 12),
                GameDevice.Instance(), gameObjectManager,wire);
             wire.SetPlayer(player);
+            if (GameData.playerNumber == 2)
+            {
+                wire2 = new Wire2();
+                player2 = new Player2(new Vector2(32 * 1, 32 * 12),
+                GameDevice.Instance(), gameObjectManager, wire2);
+                wire2.SetPlayer(player2);
+                gameObjectManager.Add(player2);
+            }
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
@@ -144,6 +159,17 @@ namespace WireGame_24.Scene
             {
                 isEndFlag = true;
             }
+            if (GameData.playerNumber == 2)
+            {
+                if (player2.Isfall())
+                {
+                    isEndFlag = true;
+                }
+                if (player2.IsGoalFlag())
+                {
+                    isEndFlag = true;
+                }
+            }
             //更新処理
             map.Update(gameTime);
             player.Update(gameTime);
@@ -154,6 +180,16 @@ namespace WireGame_24.Scene
                 return;
             }
             map.Hit(player);
+            if (GameData.playerNumber == 2)
+            {
+                player2.Update(gameTime);
+                wire2.Update(gameTime);
+                if (player2.IsDead())
+                {
+                    return;
+                }
+                map.Hit(player2);
+            }
 
             if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
             {

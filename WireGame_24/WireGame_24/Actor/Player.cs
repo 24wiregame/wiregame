@@ -30,7 +30,7 @@ namespace WireGame_24.Actor
         public OnHit OnHitEvent { get; set; }
 
         public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire)
-            : base("sikaku", position, 32, 32, gameDevice)
+            : base("sikaku", position, 64, 64, gameDevice)
         {
             velocity = Vector2.Zero;
             isJump = true;

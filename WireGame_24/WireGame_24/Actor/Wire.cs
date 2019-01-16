@@ -172,7 +172,7 @@ namespace WireGame_24.Actor
             {
                 renderer.DrawTexture(
                 "pointer",
-                wireTop +new Vector2(16,16) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
+                wireTop +new Vector2(14,14) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
                 originRotate + (float)Math.PI / 2.0f,
                 Vector2.Zero,
                 new Vector2(1, length));

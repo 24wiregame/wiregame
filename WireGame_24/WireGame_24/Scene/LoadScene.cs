@@ -71,6 +71,8 @@ namespace WireGame_24.Scene
                 {"DB",path },
                 {"DB_1",path },
                 {"DB_2",path },
+                {"DB_3",path },
+                {"DB_4",path },
                 {"JB_1",path },
                 {"JB_2",path },
                 {"JB_3",path },
@@ -78,6 +80,7 @@ namespace WireGame_24.Scene
                 {"JB_5",path },
                 {"JB_6",path },
                 {"back_1",path },
+                
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 
 

@@ -61,6 +61,8 @@ namespace WireGame_24.Actor
         {
             if (player.IsDead())
             {
+                isUse = false;
+                isDraw = false;
                 return;
             }
             
@@ -87,6 +89,7 @@ namespace WireGame_24.Actor
                 isUse = true;
                 return;
             }
+
 
 
 
@@ -134,6 +137,7 @@ namespace WireGame_24.Actor
 
 
                 velocity = new Vector2((float)px - player.GetPosition().X, (float)py - player.GetPosition().Y);
+               
 
                 player.SetVelocity(new Vector2());
                 player.SetPositionX((float)px);

@@ -16,6 +16,7 @@ namespace WireGame_24.Actor
     class Player : GameObject, IApplicableDead
     {
         private IGameObjectMediator mediator;
+        private Vector2 v;
         private Vector2 velocity;
         private bool isJump;
         private bool isfall;
@@ -30,7 +31,7 @@ namespace WireGame_24.Actor
         public OnHit OnHitEvent { get; set; }
 
         public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire)
-            : base("sikaku", position, 64, 64, gameDevice)
+            : base("IMG_0921", position, 64, 64, gameDevice)
         {
             velocity = Vector2.Zero;
             isJump = true;
@@ -190,6 +191,7 @@ namespace WireGame_24.Actor
         }
         public void SetVelocity(Vector2 velocity)
         {
+            if (IsDead()) { return; }
             this.velocity = velocity;
         }
 

@@ -86,6 +86,7 @@ namespace WireGame_24.Scene
                 {"CB_4",path },
                 {"GB_1",path },
                 {"back_1",path },
+                {"IMG_0921",path },
                 
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 

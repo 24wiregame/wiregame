@@ -21,6 +21,7 @@ namespace WireGame_24.Scene
         
         IScene backGrouneScene;
         private TimerUI maxscore;
+        private Sound sound;
         
      
 
@@ -34,8 +35,10 @@ namespace WireGame_24.Scene
             backGrouneScene = scene;
             isEndFlag = false;
             //maxscore = new TimerUI();
-            
-           
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
+
+
 
         }
        
@@ -99,9 +102,7 @@ namespace WireGame_24.Scene
         /// <summary>
         /// 終了処理
         /// </summary>
-        public void Shutdown()
-        {
-        }
+  
 
         /// <summary>
         /// 更新
@@ -109,11 +110,17 @@ namespace WireGame_24.Scene
         /// <param name="gameTime">ゲーム時間</param>
         public void Update(GameTime gameTime)
         {
+            sound.PlayBGM("Ending2");
             if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
             }
           
         }
+        public void Shutdown()
+        {
+            sound.StopBGM();
+        }
+
     }
 }

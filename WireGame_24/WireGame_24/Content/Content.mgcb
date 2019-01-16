@@ -292,3 +292,27 @@
 /processorParam:TextureFormat=Color
 /build:Texture/red.bmp
 
+#begin Sound/title4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/title4.mp3
+
+#begin Sound/Gameplay2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Gameplay2.mp3
+
+#begin Sound/Ending2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Ending2.mp3
+
+#begin Sound/end.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/end.mp3
+

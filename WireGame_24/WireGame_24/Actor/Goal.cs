@@ -10,6 +10,7 @@ namespace WireGame_24.Actor
 {
     class Goal : GameObject
     {
+        private Sound sound;//SE
         public Goal(Vector2 position, GameDevice gameDevice) : base("red", position, 32, 32, gameDevice)
         {
         }
@@ -27,6 +28,7 @@ namespace WireGame_24.Actor
 
         public override void Update(GameTime gameTime)
         {
+            sound.PlayBGM("end");
         }
         //public override void Draw(Renderer renderer)
         //{

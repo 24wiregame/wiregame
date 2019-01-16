@@ -26,6 +26,7 @@ namespace WireGame_24.Scene
         private Goal goal;       //ゴール
         private Timer timer;
         private TimerUI timerUI;//スコア
+        private Sound sound;
   
 
 
@@ -39,7 +40,8 @@ namespace WireGame_24.Scene
             isEndFlag = false;
             gameObjectManager = new GameObjectManager();
             var gameDevice = GameDevice.Instance();
-           
+            sound = gameDevice.GetSound();
+
             //player = new Player(new Vector2(32 * 2, 32 * 12), GameDevice.Instance());
         }
   
@@ -128,9 +130,9 @@ namespace WireGame_24.Scene
             //wire.Update(gameTime);
 
             timer.Update(gameTime);
-           
- 
-           
+
+
+            sound.PlayBGM("Gameplay2");
 
             if (Input.GetKeyTrigger(Keys.D1))
             {
@@ -150,6 +152,7 @@ namespace WireGame_24.Scene
             wire.Update(gameTime);
             if (player.IsDead())
             {
+                sound.StopBGM();
                 timer.ShutDown();
                 return;
             }
@@ -167,6 +170,6 @@ namespace WireGame_24.Scene
         {
             return timerUI ;
         }
-
+       
     }
 }

@@ -12,10 +12,13 @@ namespace WireGame_24.Scene
     class Title : IScene
     {
         private bool isEndFlag;
+        private Sound sound;
 
         public  Title()
         {
             isEndFlag = false;
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
         }
 
         public void Draw(Renderer renderer)
@@ -48,10 +51,15 @@ namespace WireGame_24.Scene
 
         public void Update(GameTime gameTime)
         {
+            sound.PlayBGM("title4");
             if(Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
             }
+        }
+        public void ShutDown()
+        {
+            sound.StopBGM();
         }
     }
 }

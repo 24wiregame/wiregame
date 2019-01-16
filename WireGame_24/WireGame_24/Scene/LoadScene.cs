@@ -84,7 +84,10 @@ namespace WireGame_24.Scene
             //BGM(MP3)読み込み対象データ
             string[,] data = new string[,]
             {
-                //{ "titlebgm", path},
+                { "title4", path},
+                {"Gameplay2",path },
+                {"Ending2",path },
+                {"end",path }
 
                 //必要に応じて自分で追加
             };

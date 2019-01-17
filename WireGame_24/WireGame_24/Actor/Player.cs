@@ -85,7 +85,6 @@ namespace WireGame_24.Actor
                 (Input.GetKeyTrigger(Keys.Space)||
                 Input.GetKeyTrigger(PlayerIndex.One, Buttons.B)))
             {
-                sound.PlaySE("jump");
                 JumpStart();
             }
             float speed = 4.0f;
@@ -163,7 +162,6 @@ namespace WireGame_24.Actor
                 if(isJump)
                 {
                     velocity.Y = 0.0f;
-                    sound.PlaySE("jump");
                 }
                 Console.WriteLine("HitBottom");
 

@@ -13,7 +13,8 @@ namespace WireGame_24.Actor
     {
         public Block(Vector2 position, GameDevice gameDevice)
             :base("block", position,32,32,gameDevice)
-        { }
+        {
+        }
 
         public Block(Block other)
             :this(other.position, other.gameDevice)

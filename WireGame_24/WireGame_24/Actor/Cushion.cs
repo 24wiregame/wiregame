@@ -11,7 +11,8 @@ namespace WireGame_24.Actor
     {
         public Cushion(string name, Vector2 position, GameDevice gameDevice)
            : base(name, position, 32, 32, gameDevice)
-        { }
+        {
+        }
 
         public Cushion(Cushion other)
             : this(other.name,other.position, other.gameDevice)
@@ -29,6 +30,7 @@ namespace WireGame_24.Actor
 
         public override void Hit(GameObject gameObject)
         {
+            
             var player = gameObject as Player;
             if (player == null)
             {

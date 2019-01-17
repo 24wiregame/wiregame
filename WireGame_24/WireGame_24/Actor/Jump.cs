@@ -37,6 +37,7 @@ namespace WireGame_24.Actor
         public override void Hit(GameObject gameObject)
         {
             var player = gameObject as Player;
+            sound.PlaySE("jump");
             if (player == null)
             {
                 return;

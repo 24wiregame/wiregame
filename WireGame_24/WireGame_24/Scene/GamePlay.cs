@@ -132,7 +132,7 @@ namespace WireGame_24.Scene
             timer.Update(gameTime);
 
 
-            sound.PlayBGM("Gameplay2");
+            sound.PlayBGM("gameplay");
 
             if (Input.GetKeyTrigger(Keys.D1))
             {
@@ -145,6 +145,7 @@ namespace WireGame_24.Scene
             if (player.IsGoalFlag())
             {
                 isEndFlag = true;
+                sound.PlaySE("end");
             }
             //更新処理
             map.Update(gameTime);

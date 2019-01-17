@@ -55,6 +55,7 @@ namespace WireGame_24.Scene
             if(Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
+                sound.PlaySE("click");
             }
         }
         public void ShutDown()

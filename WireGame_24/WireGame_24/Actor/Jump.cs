@@ -7,13 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WireGame_24.Actor
 {
     class Jump : GameObject
     {
         public Jump(Vector2 position, GameDevice gameDevice)
            : base("Bara", position, 32, 32, gameDevice)
-        { }
+        {
+        }
 
         public Jump(Jump other)
             : this(other.position, other.gameDevice)

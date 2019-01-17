@@ -298,21 +298,39 @@
 /processorParam:Quality=Best
 /build:Sound/title4.mp3
 
-#begin Sound/Gameplay2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Sound/Gameplay2.mp3
-
 #begin Sound/Ending2.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Sound/Ending2.mp3
 
-#begin Sound/end.mp3
+#begin Sound/end.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/end.wav
+
+#begin Sound/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/click.wav
+
+#begin Sound/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/jump.wav
+
+#begin Sound/play4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/play4.wav
+
+#begin Sound/gameplay.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Sound/end.mp3
+/build:Sound/gameplay.mp3
 

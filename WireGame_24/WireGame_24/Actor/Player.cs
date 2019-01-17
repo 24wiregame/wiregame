@@ -24,6 +24,8 @@ namespace WireGame_24.Actor
         private Wire wire;
         private bool isGoalFlag;
 
+        private Sound sound;
+
         /// <summary>
         /// 当たった時に行うイベント
         /// </summary>
@@ -36,6 +38,7 @@ namespace WireGame_24.Actor
             isJump = true;
             this.mediator = mediator;
             this.wire = wire;
+            sound = gameDevice.GetSound();
         }
         public Player(Player other)
             : this(other.position, other.gameDevice, other.mediator,other.wire)
@@ -81,6 +84,7 @@ namespace WireGame_24.Actor
                 (Input.GetKeyTrigger(Keys.Space)||
                 Input.GetKeyTrigger(PlayerIndex.One, Buttons.B)))
             {
+                sound.PlaySE("jump");
                 JumpStart();
             }
             float speed = 4.0f;
@@ -142,6 +146,7 @@ namespace WireGame_24.Actor
                     position.Y = gameObject.getRectangle().Top - this.height;
                     velocity.Y = 0.0f;
                     isJump = false;
+                    sound.PlaySE("jump");
                 }
                     Console.WriteLine("HitTop");
             }

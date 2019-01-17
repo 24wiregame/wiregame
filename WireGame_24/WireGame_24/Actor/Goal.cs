@@ -28,7 +28,7 @@ namespace WireGame_24.Actor
 
         public override void Update(GameTime gameTime)
         {
-            sound.PlayBGM("end");
+            
         }
         //public override void Draw(Renderer renderer)
         //{

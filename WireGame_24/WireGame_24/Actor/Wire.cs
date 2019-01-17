@@ -64,7 +64,13 @@ namespace WireGame_24.Actor
 
         public void Update(GameTime gameTime)
         {
-           
+            if (player.IsDead())
+            {
+                isUse = false;
+                isDraw = false;
+                return;
+            }
+            
             // 重りの座標
             isUse = false;
             ////////////////////////////////////////////////
@@ -86,8 +92,11 @@ namespace WireGame_24.Actor
                 rot_spd = (float)(180 - 2 * Math.Acos(player.GetVeloity().Length() / (2 * length)) * 180 / Math.PI);
                 rot_spd *= Math.Sign(tarGetBlock.GetPosition().Y - player.GetPosition().Y) * Math.Sign(player.GetVeloity().X);
                 Console.WriteLine("WireHit!!!!!");
+                tarGetBlock.SetName("TG_green");
+                isUse = true;
                 return;
             }
+
 
 
 
@@ -135,9 +144,9 @@ namespace WireGame_24.Actor
 
 
                 velocity = new Vector2((float)px - player.GetPosition().X, (float)py - player.GetPosition().Y);
+               
 
                 player.SetVelocity(new Vector2());
-                //player.SetVelocity(velocity);
                 player.SetPositionX((float)px);
                 player.SetPositionY((float)py);
                 player.SetJump(false);
@@ -148,18 +157,23 @@ namespace WireGame_24.Actor
             }
             if (Input.GetKeyRelease(Keys.A))
             {
+                tarGetBlock.SetName("TG_yellow");
                 player.SetVelocity(velocity);
                 Console.WriteLine("こここここここここｋ"+ velocity);
                 player.SetJump(true);
 
             }
 
-
         }
 
         public void SetTarget(TarGetBlock block)
         {
+            if (tarGetBlock != null)
+            {
+                tarGetBlock.SetName("TG_black");
+            }
             this.tarGetBlock = block;
+            tarGetBlock.SetName("TG_yellow");
             wireTop = tarGetBlock.GetPosition();
         }
         
@@ -169,7 +183,7 @@ namespace WireGame_24.Actor
             {
                 renderer.DrawTexture(
                 "pointer",
-                wireTop +new Vector2(16,16) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
+                wireTop +new Vector2(14,14) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
                 originRotate + (float)Math.PI / 2.0f,
                 Vector2.Zero,
                 new Vector2(1, length));

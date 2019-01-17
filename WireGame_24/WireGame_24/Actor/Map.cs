@@ -30,11 +30,16 @@ namespace WireGame_24.Actor
       　　　//ブロック
             objectList.Add("1", new Block(Vector2.Zero, gameDevice));
             //バラ（DeathBlock）
-            objectList.Add("2", new Bara(Vector2.Zero, gameDevice));
+            objectList.Add("2", new Bara("DB_1",Vector2.Zero, gameDevice));
+            objectList.Add("7", new Bara("DB_2", Vector2.Zero, gameDevice));
             //クッション（吸収ブロック)
-            objectList.Add("3", new Cushion(Vector2.Zero, gameDevice));
+            objectList.Add("3", new Cushion("CB_1",Vector2.Zero, gameDevice));
+            objectList.Add("8", new Cushion("CB_2", Vector2.Zero, gameDevice));
+            objectList.Add("9", new Cushion("CB_3", Vector2.Zero, gameDevice));
+            objectList.Add("10", new Cushion("CB_4", Vector2.Zero, gameDevice));
             //ジャンプ（ジャンプ台)
-            objectList.Add("4", new Jump(Vector2.Zero, gameDevice));
+            objectList.Add("4", new Jump("JB_7",Vector2.Zero, gameDevice));
+            objectList.Add("11", new Jump("JB_2", Vector2.Zero, gameDevice));
             //ターゲットブロック
             objectList.Add("5", new TarGetBlock(Vector2.Zero, gameDevice));
             //ゴール
@@ -97,40 +102,38 @@ namespace WireGame_24.Actor
         }
         public void Hit(GameObject gameObject)
         {
+
+            //GameObjectのPositionをもとにした矩形の左上のPointを取得
             Point work = gameObject.getRectangle().Location;
+            //左上のPointがあるマップの添え字となるx,yを取得
             int x = work.X / 32;
             int y = work.Y / 32;
-            if(x < 1)
-            {
-                x = 1;
-            }
-            if(y < 1)
-            {
-                y = 1;
-            }
+            //if(x < 1)
+            //{
+            //    x = 1;
+            //}
+            //if(y < 1)
+            //{
+            //    y = 1;
+            //}
+            x = Math.Max(x, 1);
+            y = Math.Max(y, 1);
+
             Range yRange = new Range(0, mapList.Count() - 1);
             Range xRange = new Range(0, mapList[0].Count() - 1);
 
-            for (int row = y - 1; row <= (y + 1) && yRange.IsWithin(row); row++)
+            if (gameObject.GetHeight() == 32 &&
+                gameObject.GetWidht()  == 32)
             {
-                 xRange = new Range(0, mapList[row].Count() - 1);
-                for (int col = x - 1; col <= (x + 1) && xRange.IsWithin(col); col++)
-                {
-                    if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))
-                    {
-                        continue;
-                    }
-                    GameObject obj = mapList[row][col];
-                    if(obj is Space)
-                    {
-                        continue;
-                    }
-                    if(obj.IsCollision(gameObject))
-                    {
-                        gameObject.Hit(obj);
-                        obj.Hit(gameObject);
-                    }
-                }
+                CallHit32x32(x, y, xRange, yRange, gameObject);
+                return;
+            }
+
+            if (gameObject.GetHeight() == 64 &&
+                gameObject.GetWidht()  == 64)
+            {
+                CallHit64x64(x, y, xRange, yRange, gameObject);
+                return;
             }
         }
         public void Draw(Renderer renderer)
@@ -148,6 +151,9 @@ namespace WireGame_24.Actor
             }
         }
 
+
+
+
         public TarGetBlock GetNearTarget(Vector2 position)
         {
             float distance = float.MaxValue;
@@ -162,10 +168,86 @@ namespace WireGame_24.Actor
                     distance = length;
                     nearTarget = tl;
                 }
+                
             }
-            return nearTarget;
             
-
+            return nearTarget;
         }
+
+        /// <summary>
+        /// 32x32の時に呼ぶヒット処理
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="xRange"></param>
+        /// <param name="yRange"></param>
+        /// <param name="gameObject"></param>
+        private void CallHit32x32(int x, int y, Range xRange, Range yRange, GameObject gameObject)
+        {
+            //row=行,col=列
+            //(y-1 <= row <= y+1)
+            for (int row = y - 1; row <= (y + 1) && yRange.IsWithin(row); row++)
+            {
+                //念のため,xRangeを更新
+                xRange = new Range(0, mapList[row].Count() - 1);
+                for (int col = x - 1; col <= (x + 1) && xRange.IsWithin(col); col++)
+                {
+                    //(x-1 <= col <= x+1)
+                    if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))
+                    {
+                        continue;
+                    }
+                    //mapのgameObjectを取得
+                    GameObject obj = mapList[row][col];
+                    //添え字の値が範囲外だったらcontinue
+                    if (xRange.IsOutOfRange(col) || xRange.IsOutOfRange(row)) continue;
+                    //spaceだったらcontinue
+                    if (obj is Space) continue;
+
+                    //当たっているか判定
+                    if (obj.IsCollision(gameObject))
+                    {
+                        //当たっていたのでHitメソッドを呼ぶ
+                        gameObject.Hit(obj);
+                        obj.Hit(gameObject);
+                    }
+                }
+            }
+        }
+
+        //64x64の時に呼ぶヒット処理
+        private void CallHit64x64(int x, int y, Range xRange, Range yRange, GameObject gameObject)
+        {
+            //row=行,col=列
+            //(y-1 <= row <= y+1)
+            for (int row = y - 2; row <= (y + 2) && yRange.IsWithin(row); row += 2)
+            {
+                //念のため,xRangeを更新
+                xRange = new Range(0, mapList[row].Count() - 2);
+                for (int col = x - 2; col <= (x + 2) && xRange.IsWithin(col); col +=2)
+                {
+                    //(x-1 <= col <= x+1)
+                    if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))
+                    {
+                        continue;
+                    }
+                    //mapのgameObjectを取得
+                    GameObject obj = mapList[row][col];
+                    //添え字の値が範囲外だったらcontinue
+                    if (xRange.IsOutOfRange(col) || xRange.IsOutOfRange(row)) continue;
+                    //spaceだったらcontinue
+                    if (obj is Space) continue;
+
+                    //当たっているか判定
+                    if (obj.IsCollision(gameObject))
+                    {
+                        //当たっていたのでHitメソッドを呼ぶ
+                        gameObject.Hit(obj);
+                        obj.Hit(gameObject);
+                    }
+                }
+            }
+        }
+
     }
 }

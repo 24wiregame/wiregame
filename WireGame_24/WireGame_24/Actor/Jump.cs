@@ -12,13 +12,19 @@ namespace WireGame_24.Actor
 {
     class Jump : GameObject
     {
+<<<<<<< HEAD
         public Jump(Vector2 position, GameDevice gameDevice)
            : base("Bara", position, 32, 32, gameDevice)
         {
         }
+=======
+        public Jump(string name,Vector2 position, GameDevice gameDevice)
+           : base(name, position, 32, 32, gameDevice)
+        { }
+>>>>>>> master
 
         public Jump(Jump other)
-            : this(other.position, other.gameDevice)
+            : this(other.name,other.position, other.gameDevice)
         {
         }
 

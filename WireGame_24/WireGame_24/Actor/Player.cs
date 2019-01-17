@@ -163,6 +163,7 @@ namespace WireGame_24.Actor
                 if(isJump)
                 {
                     velocity.Y = 0.0f;
+                    sound.PlaySE("jump");
                 }
                 Console.WriteLine("HitBottom");
 

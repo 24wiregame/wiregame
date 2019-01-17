@@ -655,3 +655,45 @@
 /processorParam:TextureFormat=Color
 /build:Texture/IMG_0921.PNG
 
+#begin Sound/click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/click.wav
+
+#begin Sound/end.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/end.wav
+
+#begin Sound/Ending2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Ending2.mp3
+
+#begin Sound/gameplay.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/gameplay.mp3
+
+#begin Sound/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/jump.wav
+
+#begin Sound/play4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/play4.wav
+
+#begin Sound/title4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/title4.mp3
+

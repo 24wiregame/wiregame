@@ -35,6 +35,8 @@ namespace WireGame_24.Actor
 
         private bool isUse;
 
+        private Sound sound;
+
         public Wire()
         {
             
@@ -42,6 +44,9 @@ namespace WireGame_24.Actor
             gravity = 0.5f;
 
             isUse = false;
+
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
         }
 
         public void SetPlayer(Player player)
@@ -71,6 +76,8 @@ namespace WireGame_24.Actor
             ////////////////////////////////////////////////
             if (Input.GetKeyTrigger(Keys.A))
             {
+                sound.PlaySE("play4");
+
                 wirePosition = player.GetPosition();
                 line = wireTop - wirePosition;
                 length = line.Length();                       //線の長さ

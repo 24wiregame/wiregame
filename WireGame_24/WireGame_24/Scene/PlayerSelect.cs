@@ -71,17 +71,20 @@ namespace WireGame_24.Scene
                 cursor += 1;
                 if (cursor > 1)
                     cursor = 0;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Left))
             {
                 cursor -= 1;
                 if (cursor < 0)
                     cursor = 1;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
                 GameData.playerNumber = cursor + 1;
+                sound.PlaySE("click");
             }
 
         }

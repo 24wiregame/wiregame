@@ -73,17 +73,20 @@ namespace WireGame_24.Scene
                 cursor += 1;
                 if (cursor > 2)
                     cursor = 0;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Left))
             {
                 cursor -= 1;
                 if (cursor < 0)
                     cursor = 2;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
                 GameData.stageNumber = cursor + 1;
+                sound.PlaySE("click");
             }
 
         }

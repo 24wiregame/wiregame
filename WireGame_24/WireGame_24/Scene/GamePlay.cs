@@ -85,6 +85,7 @@ namespace WireGame_24.Scene
 
             timer = new CountUpTimer(100);
             timerUI = new TimerUI(timer);
+            sound.PlaySE("start");
            
 
         }
@@ -131,7 +132,6 @@ namespace WireGame_24.Scene
 
             timer.Update(gameTime);
 
-
             sound.PlayBGM("gameplay");
 
             if (Input.GetKeyTrigger(Keys.D1))
@@ -141,6 +141,7 @@ namespace WireGame_24.Scene
             if(player.Isfall())
             {
                 isEndFlag = true;
+                sound.PlaySE("Down3");
             }
             if (player.IsGoalFlag())
             {

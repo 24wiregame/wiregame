@@ -34,6 +34,7 @@ namespace WireGame_24.Actor
             var player = gameObject as Player;
             if (player == null)
             {
+                sound.PlaySE("jump");
                 return;
             }
             player.SetVelocity(new Vector2(0, 0));

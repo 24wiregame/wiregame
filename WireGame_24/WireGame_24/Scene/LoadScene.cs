@@ -86,6 +86,7 @@ namespace WireGame_24.Scene
                 {"CB_4",path },
                 {"GB_1",path },
                 {"back_1",path },
+                {"DeathBall",path },
                 {"IMG_0921",path },
                 {"renban",path },
                 
@@ -140,7 +141,10 @@ namespace WireGame_24.Scene
                 { "click", path },
                 {"end",path },
                 {"jump",path },
-                {"play4",path}
+                {"play4",path},
+                {"toge1",path},
+                {"Down3",path },
+                {"start",path }
 
                 //必要に応じて自分で追加
             };

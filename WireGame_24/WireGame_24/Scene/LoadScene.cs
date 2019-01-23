@@ -88,6 +88,7 @@ namespace WireGame_24.Scene
                 {"back_1",path },
                 {"DeathBall",path },
                 {"IMG_0921",path },
+                {"renban",path },
                 
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 
@@ -112,7 +113,10 @@ namespace WireGame_24.Scene
             //BGM(MP3)読み込み対象データ
             string[,] data = new string[,]
             {
-                //{ "titlebgm", path},
+                { "title4", path},
+                {"gameplay",path },
+                {"Ending2",path },
+                
 
                 //必要に応じて自分で追加
             };
@@ -134,7 +138,10 @@ namespace WireGame_24.Scene
             //BGM(MP3)読み込み対象データ
             string[,] data = new string[,]
             {
-                //{ "titlese", path },
+                { "click", path },
+                {"end",path },
+                {"jump",path },
+                {"play4",path}
 
                 //必要に応じて自分で追加
             };

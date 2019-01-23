@@ -35,6 +35,8 @@ namespace WireGame_24.Actor
 
         private bool isUse;
 
+        private Sound sound;
+
         public Wire()
         {
             
@@ -42,6 +44,9 @@ namespace WireGame_24.Actor
             gravity = 0.5f;
 
             isUse = false;
+
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
         }
 
         public void SetPlayer(Player player)
@@ -71,6 +76,8 @@ namespace WireGame_24.Actor
             ////////////////////////////////////////////////
             if (Input.GetKeyTrigger(Keys.A))
             {
+                sound.PlaySE("play4");
+
                 wirePosition = player.GetPosition();
                 line = wireTop - wirePosition;
                 length = line.Length();                       //線の長さ
@@ -130,6 +137,7 @@ namespace WireGame_24.Actor
                 rot_spd *= 0.999f;
                 // 角度に角速度を加算
                 rot += rot_spd;
+                
                 // 新しい重りの位置
                 rad = rot * Math.PI / 180;
                 px = wireTop.X + Math.Cos(rad) * length;

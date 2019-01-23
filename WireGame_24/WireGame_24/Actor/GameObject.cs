@@ -22,6 +22,7 @@ namespace WireGame_24.Actor
         protected int height;
         protected bool isDeadFlag = false;
         protected GameDevice gameDevice;
+        protected Sound sound;
 
       public GameObject(string name, Vector2 position, int width,
           int height, GameDevice gameDevice)
@@ -31,6 +32,7 @@ namespace WireGame_24.Actor
             this.width = width;
             this.height = height;
             this.gameDevice = gameDevice;
+            sound = gameDevice.GetSound();
         }
 
         public void SetPosition(Vector2 position)

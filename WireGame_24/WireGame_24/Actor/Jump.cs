@@ -7,10 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WireGame_24.Actor
 {
     class Jump : GameObject
     {
+        public Jump(Vector2 position, GameDevice gameDevice)
+           : base("Bara", position, 32, 32, gameDevice)
+        {
+        }
         public Jump(string name,Vector2 position, GameDevice gameDevice)
            : base(name, position, 32, 32, gameDevice)
         { }
@@ -32,6 +37,7 @@ namespace WireGame_24.Actor
         public override void Hit(GameObject gameObject)
         {
             var player = gameObject as Player;
+            sound.PlaySE("jump");
             if (player == null)
             {
                 return;

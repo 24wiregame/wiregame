@@ -31,6 +31,7 @@ namespace WireGame_24.Actor
 
         public override void Hit(GameObject gameObject)
         {
+            sound.PlaySE("toge1");
             var deadcomponet = gameObject as IApplicableDead;
             if(deadcomponet == null)
             {

@@ -85,6 +85,7 @@ namespace WireGame_24.Actor
 
         public override void Update(GameTime gameTime)
         {
+            
             if (position.Y > Screen.Height)
             {
                 isDeadFlag = true;

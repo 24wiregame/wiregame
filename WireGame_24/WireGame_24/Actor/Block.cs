@@ -42,7 +42,6 @@ namespace WireGame_24.Actor
             {
                 return;
             }
-            player.SetVelocity( new Vector2(0, -25));
             //playerの変数置き換え
             Vector2 PlayPos = player.GetPosition();
 

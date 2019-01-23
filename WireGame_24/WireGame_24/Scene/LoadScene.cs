@@ -86,6 +86,7 @@ namespace WireGame_24.Scene
                 {"CB_4",path },
                 {"GB_1",path },
                 {"back_1",path },
+                {"DeathBall",path },
                 {"IMG_0921",path },
                 {"renban",path },
                 

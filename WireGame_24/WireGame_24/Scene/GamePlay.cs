@@ -140,23 +140,24 @@ namespace WireGame_24.Scene
             }
             if(player.Isfall())
             {
-                isEndFlag = true;
+                player = new Player(new Vector2(32 * 2, 32 * 12),
+               GameDevice.Instance(), gameObjectManager,wire);
+                wire.SetPlayer(player);
+                gameObjectManager.Add(map);
+                gameObjectManager.Add(player);
             }
             if (player.IsGoalFlag())
             {
+                sound.StopBGM();
+                timer.ShutDown();
                 isEndFlag = true;
                 sound.PlaySE("end");
+                return;
             }
             //更新処理
             map.Update(gameTime);
             player.Update(gameTime);
             wire.Update(gameTime);
-            if (player.IsDead())
-            {
-                sound.StopBGM();
-                timer.ShutDown();
-                return;
-            }
             map.Hit(player);
 
             if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
@@ -164,7 +165,6 @@ namespace WireGame_24.Scene
 
                 isEndFlag = true;
                 timer.ShutDown();
-
             }
         }
         public TimerUI returnScore()

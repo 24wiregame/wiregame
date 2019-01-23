@@ -25,7 +25,7 @@ namespace WireGame_24.Actor
         private float gravity;
         private Wire wire;
         private bool isGoalFlag;
-        
+        private Motion motion;
         private Sound sound;
 
         /// <summary>
@@ -41,6 +41,14 @@ namespace WireGame_24.Actor
             this.mediator = mediator;
             this.wire = wire;
             sound = gameDevice.GetSound();
+
+            motion = new Motion();
+            for (int i = 0; i < 16; i++)
+            {
+                motion.Add(i, new Rectangle(64 * i, 0, 64, 64));
+            }
+            //最初はすべてのパーツ表示に設定
+            motion.Initialize(new Range(0, 3), new CountDownTimer(0.2f));
         }
         public Player(Player other)
             : this(other.position, other.gameDevice, other.mediator,other.wire)
@@ -72,6 +80,7 @@ namespace WireGame_24.Actor
             }
             
         }
+        
 
 
         public override void Update(GameTime gameTime)
@@ -234,6 +243,25 @@ namespace WireGame_24.Actor
         {
             return isGoalFlag;
         }
-        
+
+        /// <summary>
+        /// 衝突判定（2点間の距離と円の半径） Playerだけ64*64にする
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public override bool InCollision(GameObject otherObj)
+        {
+            //じぶんと相手の位置の長さを計算（2点間の距離）
+            float length = ((position + new Vector2(32, 32)) - (otherObj.GetPosition() + new Vector2(16, 16))).Length();
+            //白玉画像のサイズは64なので、半径は32
+            float radiusSum = 32f + 32f;
+            //自分半径の和と距離を比べて、等しいかまたは小さいか（以下か）
+            if (length <= radiusSum)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

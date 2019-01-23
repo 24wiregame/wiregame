@@ -84,6 +84,7 @@ namespace WireGame_24.Actor
                     {
                         c1.Hit(c2);
                         c2.Hit(c1);
+
                     }
                 }
             }

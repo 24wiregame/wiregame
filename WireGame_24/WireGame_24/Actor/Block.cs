@@ -42,16 +42,17 @@ namespace WireGame_24.Actor
             //playerの変数置き換え
             Vector2 PlayPos = player.GetPosition();
 
-
             Vector2 distance = PlayPos - position;
 
 
             ///プレイヤーのどこが当たっているか判定
-            //法線ベクトル
+            //壁の当たってる表面ベクトル
+            Vector2 VW;
+            //壁の法線ベクトル
             Vector2 VN;
             //a
             Vector2 VA;
-            ///
+            //反射ベクトル
             Vector2 VR;
 
             ///進行ベクトル
@@ -72,38 +73,47 @@ namespace WireGame_24.Actor
 
             //進行ベクトルF
             float F = pbDistance * pbDegree;
-
+            //進行ベクトル
             Vector2 VF = player.GetVeloity();
 
             Direction dir = CheckDirection(gameObject);
-            //プレイヤー上面
+            
+            //プレイヤーがブロックの上面
             if (dir == Direction.Top)
             {
-                VN = new Vector2(0, 1);
+                VW = position + new Vector2(32, 0) - position;
+                VN = new Vector2(0, -1);
+                VN.Normalize();
                 VA = -VF * VN;
                 VR = VF + 2 * VA * VN;
                 player.SetVelocity(VR);
             }
-            //プレイヤー側面右
+            //プレイヤーがブロックの側面右
             else if (dir == Direction.Right)
             {
+                VW = position + new Vector2(0, 32) - position;
                 VN = new Vector2(-1, 0);
+                VN.Normalize();
                 VA = -VF * VN;
                 VR = VF + 2 * VA * VN;
                 player.SetVelocity(VR);
             }
-            //プレイヤー側面左
+            //プレイヤーがブロックの側面左
             else if (dir == Direction.Left)
             {
+                VW = position + new Vector2(32,32) - position + new Vector2(32,0);
                 VN = new Vector2(1, 0);
+                VN.Normalize();
                 VA = -VF * VN;
                 VR = VF + 2 * VA * VN;
                 player.SetVelocity(VR);
             }
-            //プレイヤー底面
+            //プレイヤーがブロックの底面
             else if (dir == Direction.Bottom)
             {
-                VN = new Vector2(0, -1);
+                VW = position + new Vector2(32, 32) - position + new Vector2(0,32);
+                VN = new Vector2(0, 1);
+                VN.Normalize();
                 VA = -VF * VN;
                 VR = VF + 2 * VA * VN;
                 player.SetVelocity(VR);

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using WireGame_24.Def;
 using WireGame_24.Scene;
 using WireGame_24.Actor.Interface;
+using WireGame_24.Util;
 namespace WireGame_24.Actor
 {
     delegate void OnHit();
@@ -24,7 +25,7 @@ namespace WireGame_24.Actor
         private float gravity;
         private Wire wire;
         private bool isGoalFlag;
-
+        
         private Sound sound;
 
         /// <summary>
@@ -141,7 +142,7 @@ namespace WireGame_24.Actor
                 if(position.Y > 0.0f)
                 {
                     position.Y = gameObject.getRectangle().Top - this.height;
-                    velocity.Y = 0.0f;
+                    //velocity.Y = 0.0f;
                     isJump = false;
                     sound.PlaySE("jump");
                 }

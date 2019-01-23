@@ -11,6 +11,8 @@ namespace WireGame_24.Actor
 {
     class Block : GameObject
     {
+
+
         public Block(Vector2 position, GameDevice gameDevice)
             :base("block", position,32,32,gameDevice)
         { }
@@ -36,7 +38,77 @@ namespace WireGame_24.Actor
             {
                 return;
             }
-            player.SetVelocity(new Vector2(0, -25));
+            //playerの変数置き換え
+            Vector2 PlayPos = player.GetPosition();
+
+
+            Vector2 distance = PlayPos - position;
+
+
+            ///プレイヤーのどこが当たっているか判定
+            //法線ベクトル
+            Vector2 VN;
+            //a
+            Vector2 VA;
+            ///
+            Vector2 VR;
+
+            ///進行ベクトル
+            //playerとblockの距離
+            float pbDistance = (float)Math.Sqrt
+                ((PlayPos.X - position.X) * (PlayPos.X - position.X) +
+                ((PlayPos.Y - position.Y) * (PlayPos.Y - position.Y)));
+
+            Vector2 pbDis = new Vector2((float)Math.Sqrt
+                ((PlayPos.X - position.X) * (PlayPos.X - position.X)),
+                (float)Math.Sqrt(PlayPos.Y - position.Y) * (PlayPos.Y - position.Y));
+
+            //playerとblockの角度
+            float pbRadian = (float)Math.Atan2
+                (PlayPos.Y - position.Y, PlayPos.X - position.X);
+            //角度方法変換
+            float pbDegree = pbRadian * (float)Math.PI / 180;
+
+            //進行ベクトルF
+            float F = pbDistance * pbDegree;
+
+            Vector2 VF = player.GetVeloity();
+
+            Direction dir = CheckDirection(gameObject);
+            //プレイヤー上面
+            if (dir == Direction.Top)
+            {
+                VN = new Vector2(0, 1);
+                VA = -VF * VN;
+                VR = VF + 2 * VA * VN;
+                player.SetVelocity(VR);
+            }
+            //プレイヤー側面右
+            else if (dir == Direction.Right)
+            {
+                VN = new Vector2(-1, 0);
+                VA = -VF * VN;
+                VR = VF + 2 * VA * VN;
+                player.SetVelocity(VR);
+            }
+            //プレイヤー側面左
+            else if (dir == Direction.Left)
+            {
+                VN = new Vector2(1, 0);
+                VA = -VF * VN;
+                VR = VF + 2 * VA * VN;
+                player.SetVelocity(VR);
+            }
+            //プレイヤー底面
+            else if (dir == Direction.Bottom)
+            {
+                VN = new Vector2(0, -1);
+                VA = -VF * VN;
+                VR = VF + 2 * VA * VN;
+                player.SetVelocity(VR);
+            }
         }
+        
+
     }
 }

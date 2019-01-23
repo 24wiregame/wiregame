@@ -655,3 +655,18 @@
 /processorParam:TextureFormat=Color
 /build:Texture/IMG_0921.PNG
 
+#begin Texture/renban.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Texture/renban.png
+
+#begin test01.csv
+/copy:test01.csv
+

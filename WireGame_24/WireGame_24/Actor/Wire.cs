@@ -130,6 +130,7 @@ namespace WireGame_24.Actor
                 rot_spd *= 0.999f;
                 // 角度に角速度を加算
                 rot += rot_spd;
+                
                 // 新しい重りの位置
                 rad = rot * Math.PI / 180;
                 px = wireTop.X + Math.Cos(rad) * length;

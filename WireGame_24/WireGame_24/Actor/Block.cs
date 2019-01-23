@@ -11,12 +11,12 @@ namespace WireGame_24.Actor
 {
     class Block : GameObject
     {
-        public Block(Vector2 position, GameDevice gameDevice)
-            :base("block", position,32,32,gameDevice)
+        public Block( string name, Vector2 position, GameDevice gameDevice)
+            :base(name, position,32,32,gameDevice)
         { }
 
         public Block(Block other)
-            :this(other.position, other.gameDevice)
+            :this( other.name, other.position, other.gameDevice)
         {
         }
 
@@ -36,7 +36,7 @@ namespace WireGame_24.Actor
             {
                 return;
             }
-            player.SetVelocity(new Vector2(0, -25));
+            player.SetVelocity( new Vector2(0, -25));
         }
     }
 }

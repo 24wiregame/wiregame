@@ -28,10 +28,15 @@ namespace WireGame_24.Actor
             //スペース
             objectList.Add("0", new Space(Vector2.Zero, gameDevice));
       　　　//ブロック
-            objectList.Add("1", new Block(Vector2.Zero, gameDevice));
+            objectList.Add("1", new Block("SB_5",Vector2.Zero, gameDevice));
+            objectList.Add("14", new Block("SB_6", Vector2.Zero, gameDevice));
+            objectList.Add("15", new Block("SB_3", Vector2.Zero, gameDevice));
+            objectList.Add("16", new Block("SB_4", Vector2.Zero, gameDevice));
             //バラ（DeathBlock）
-            objectList.Add("2", new Bara("DB_1",Vector2.Zero, gameDevice));
-            objectList.Add("7", new Bara("DB_2", Vector2.Zero, gameDevice));
+            objectList.Add("2", new Bara("DeathBall",Vector2.Zero, gameDevice));
+            objectList.Add("7", new Bara("DeathBall", Vector2.Zero, gameDevice));
+            //objectList.Add("12", new Bara("DB_3", Vector2.Zero, gameDevice));
+            //objectList.Add("13", new Bara("DB_4", Vector2.Zero, gameDevice));
             //クッション（吸収ブロック)
             objectList.Add("3", new Cushion("CB_1",Vector2.Zero, gameDevice));
             objectList.Add("8", new Cushion("CB_2", Vector2.Zero, gameDevice));
@@ -40,6 +45,7 @@ namespace WireGame_24.Actor
             //ジャンプ（ジャンプ台)
             objectList.Add("4", new Jump("JB_7",Vector2.Zero, gameDevice));
             objectList.Add("11", new Jump("JB_2", Vector2.Zero, gameDevice));
+            objectList.Add("17", new Jump("JB_5", Vector2.Zero, gameDevice));
             //ターゲットブロック
             objectList.Add("5", new TarGetBlock(Vector2.Zero, gameDevice));
             //ゴール

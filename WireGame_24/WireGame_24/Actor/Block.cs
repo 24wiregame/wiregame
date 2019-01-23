@@ -11,6 +11,9 @@ namespace WireGame_24.Actor
 {
     class Block : GameObject
     {
+        public Block( string name, Vector2 position, GameDevice gameDevice)
+            :base(name, position,32,32,gameDevice)
+        { }
 
 
         public Block(Vector2 position, GameDevice gameDevice)
@@ -19,7 +22,7 @@ namespace WireGame_24.Actor
         }
 
         public Block(Block other)
-            :this(other.position, other.gameDevice)
+            :this( other.name, other.position, other.gameDevice)
         {
         }
 
@@ -39,6 +42,7 @@ namespace WireGame_24.Actor
             {
                 return;
             }
+            player.SetVelocity( new Vector2(0, -25));
             //playerの変数置き換え
             Vector2 PlayPos = player.GetPosition();
 

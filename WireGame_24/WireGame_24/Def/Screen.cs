@@ -12,7 +12,7 @@ namespace WireGame_24.Def
     static class Screen
     {
         //C#
-        public static readonly int Width = 2000;//画面横幅
+        public static readonly int Width = 1920;//画面横幅
         public static readonly int Height = 1000;//画面縦幅
     }
 }

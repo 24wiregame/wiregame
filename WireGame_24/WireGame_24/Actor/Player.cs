@@ -28,14 +28,17 @@ namespace WireGame_24.Actor
         private Motion motion;
         private Sound sound;
 
+        private PlayerIndex index;
+
         /// <summary>
         /// 当たった時に行うイベント
         /// </summary>
         public OnHit OnHitEvent { get; set; }
 
-        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire)
-            : base("IMG_0921", position, 64, 64, gameDevice)
+        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire, PlayerIndex index)
+            : base("renban_1", position, 64, 64, gameDevice)
         {
+            this.index = index;
             velocity = Vector2.Zero;
             isJump = true;
             this.mediator = mediator;
@@ -48,13 +51,13 @@ namespace WireGame_24.Actor
                 motion.Add(i, new Rectangle(64 * i, 0, 64, 64));
             }
             //最初はすべてのパーツ表示に設定
-            motion.Initialize(new Range(0, 3), new CountDownTimer(0.2f));
+            motion.Initialize(new Range(0, 14), new CountDownTimer(0.05f));
         }
         public Player(Player other)
-            : this(other.position, other.gameDevice, other.mediator,other.wire)
+            : this(other.position, other.gameDevice, other.mediator,other.wire, other.index)
         {
-
         }
+
         public override object Clone()
         {
             return new Player(this);
@@ -80,7 +83,31 @@ namespace WireGame_24.Actor
             }
             
         }
-        
+        /// <summary>
+        /// 描画
+        /// </summary>
+        /// <param name="renderer"></param>
+        public override void Draw(Renderer renderer)
+        {
+            
+            if (!wire.IsUse())
+            {
+                if(!IsDead())
+                {
+                    renderer.DrawTexture(name, position + gameDevice.GetDisplayModify(), motion.DrawingRange(),Color.Red);
+                }
+               
+            }
+            else
+            {
+                renderer.DrawTexture("swing_1", position + gameDevice.GetDisplayModify());
+            }
+            if(IsDead())
+            {
+                renderer.DrawTexture("death", position + gameDevice.GetDisplayModify());
+            }
+
+        }
 
 
         public override void Update(GameTime gameTime)
@@ -91,10 +118,9 @@ namespace WireGame_24.Actor
                 isDeadFlag = true;
                 isfall = true;
             }
-
-            if((isJump == false)&&
-                (Input.GetKeyTrigger(Keys.Space)||
-                Input.GetKeyTrigger(PlayerIndex.One, Buttons.B)))
+            motion.Update(gameTime);
+            if ((isJump == false)&&
+                IsJumpKeyPressed())
             {
                 JumpStart();
             }
@@ -105,15 +131,11 @@ namespace WireGame_24.Actor
                 UseGravity();
                 wire.SetTarget(((GameObjectManager)mediator).GetNearTarGet(position));
             }
-            //UpdateWireVelocity();
-            // float inputVelocity = Input.Velocity().X;
-            //velocity.X = Input.Velocity().X * speed +
-            // Input.Velocity(PlayerIndex.One).X * speed;
+            
             position = position+velocity;
-            Console.WriteLine("Velocity:"+velocity);
             
             //プレイヤーの位置を画面の中心に位置補正する
-            setDisplayModify();
+           // setDisplayModify();
             
         }
         private void UseGravity()
@@ -123,7 +145,6 @@ namespace WireGame_24.Actor
 
         private void JumpStart()
         {
-            velocity.Y = -8.0f;
             isJump = true;
         }
 
@@ -137,10 +158,6 @@ namespace WireGame_24.Actor
             velocity += originVelocty;
             originVelocty.X *= 0.99f;
             originVelocty.Y *= 0.05f;
-            
-            // velocity = wire.GetVelocity() * new Vector2(0.99f, 0.99f);
-            Console.WriteLine("ああああああああああああああ" + velocity);
-
         }
 
         private void hitBlock(GameObject gameObject)
@@ -155,17 +172,14 @@ namespace WireGame_24.Actor
                     isJump = false;
                     sound.PlaySE("jump");
                 }
-                    Console.WriteLine("HitTop");
             }
             else if(dir == Direction.Right)
             {
                 position.X = gameObject.getRectangle().Right;
-                Console.WriteLine("HitRight");
             }
             else if(dir == Direction.Left)
             {
                 position.X = gameObject.getRectangle().Left - this.width;
-                Console.WriteLine("HitLeft");
             }
             else if(dir == Direction.Bottom)
             {
@@ -174,12 +188,11 @@ namespace WireGame_24.Actor
                 {
                     velocity.Y = 0.0f;
                 }
-                Console.WriteLine("HitBottom");
 
             }
-            setDisplayModify();
+          //  setDisplayModify();
         }
-        private void setDisplayModify()
+        public void setDisplayModify()
         {
             gameDevice.SetDisplayModify(new Vector2(-position.X + (Screen.Width / 2 -
                 width / 2), 0.0f));
@@ -262,6 +275,28 @@ namespace WireGame_24.Actor
                 return true;
             }
             return false;
+        }
+
+        private bool IsJumpKeyPressed()
+        {
+            //コントローラー判定
+            if (Input.GetKeyTrigger(index, Buttons.B))
+            {
+                return true;
+            }
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyTrigger(Keys.Space);
+                case PlayerIndex.Two:
+                    return Input.GetKeyTrigger(Keys.Tab);
+            }
+            return false;
+        }
+
+        public PlayerIndex GetIndex()
+        {
+            return index;
         }
 
     }

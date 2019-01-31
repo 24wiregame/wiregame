@@ -40,55 +40,82 @@ namespace WireGame_24.Scene
             //読み込み対象データ
             string[,] data = new string[,]
             {
-                { "black", path},
-                { "block", path},
-                { "block2", path},
-                { "button1", path},
-                { "button2", path},
-                { "door1", path},
-                { "door2", path},
-                { "number", path},
-                { "player", path},
-                { "puddle", path},
-                { "Bara", path},
-                {"kariT", path },
-                {"cursor",path },
-                {"stage",path },
+                //フレーム
+                {"cursor",path },　　　//元
+                {"ModeFrame",path },
+                {"StageFrame",path },
+                {"MF",path },
+                //選択
+                {"StageSelect",path },
+
+                {"stage",path },       //元
+                {"stage1,5",path },
+                {"stage1",path },
+                {"stage2",path },
+                {"stage3",path },
+                {"stage4",path },
+                {"stage5",path },
+                
+                //モードセレクト
                 {"01or02",path },
-                {"number",path },
+                {"single",path },
+                {"1v1",path },
+                {"selectscene",path },
+                //UI
+                {"number_wire",path }, //数字
                 {"score",path },
-                {"sikaku",path },
+                {"time",path },
+                {"Loading",path },
+
+                //ブロック
                 {"red",path },
-                {"SB_1",path },
-                {"SB_2",path },
-                {"SB_3",path },
+
+                {"SB_3",path },    
                 {"SB_4",path },
                 {"SB_5",path },
                 {"SB_6",path },
+
                 {"TG_green",path },
                 {"TG_yellow",path },
                 {"TG_black",path },
-                {"DB",path },
-                {"DB_1",path },
-                {"DB_2",path },
-                {"DB_3",path },
-                {"DB_4",path },
-                {"JB_1",path },
+                
                 {"JB_2",path },
-                {"JB_3",path },
-                {"JB_4",path },
                 {"JB_5",path },
-                {"JB_6",path },
                 {"JB_7",path },
+
                 {"CB_1",path },
                 {"CB_2",path },
                 {"CB_3",path },
                 {"CB_4",path },
-                {"GB_1",path },
-                {"back_1",path },
+
                 {"DeathBall",path },
-                {"IMG_0921",path },
+
+                {"GB_1",path },
+                //シーン
+                {"Title",path },     //タイトル
+                {"back",path },　　　//ゲームプレイ
+                {"back0",path },
+                {"Sky",path },
+                //エンディング
+                {"1Pwin",path },
+                {"2Pwin",path },
+                {"GameClear",path },
+                {"StageClear",path },
+
+                //プレイヤー
                 {"renban",path },
+                {"renban_1",path },
+                {"swing_1",path },
+
+                {"death",path },
+                {"pointer",path },　//wire
+                //カウントダウン
+                {"1",path },
+                {"2",path },
+                {"3",path },
+                {"start",path },
+                
+
                 
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 
@@ -179,7 +206,7 @@ namespace WireGame_24.Scene
             //描画開始
             renderer.Begin();
 
-            renderer.DrawTexture("load", new Vector2(20, 20));
+            renderer.DrawTexture("Loading", Vector2.Zero);
 
             //現在読み込んでいる数を取得
             int currentCount =
@@ -194,9 +221,9 @@ namespace WireGame_24.Scene
                 float rate = (float)currentCount / totalResouceNum;
                 //数字で描画
                 renderer.DrawNumber(
-                    "number",
-                    new Vector2(20, 100),
-                    (int)( rate * 100.0f));
+                    "number_wire",
+                    new Vector2(20, 110),
+                    (int)(rate * 100.0f));
 
                 //バーで描画
                 renderer.DrawTexture(

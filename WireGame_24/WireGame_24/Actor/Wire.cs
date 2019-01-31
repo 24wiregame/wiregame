@@ -37,8 +37,11 @@ namespace WireGame_24.Actor
 
         private Sound sound;
 
-        public Wire()
+        private PlayerIndex index;
+
+        public Wire(PlayerIndex index)
         {
+            this.index = index;
             
             isDraw = false;
             gravity = 0.5f;
@@ -74,7 +77,7 @@ namespace WireGame_24.Actor
             // 重りの座標
             isUse = false;
             ////////////////////////////////////////////////
-            if (Input.GetKeyTrigger(Keys.A))
+            if (IsKeyTrigger())
             {
                 sound.PlaySE("play4");
 
@@ -86,12 +89,8 @@ namespace WireGame_24.Actor
                         player.GetPosition().Y - wireTop.Y,
                         player.GetPosition().X - wireTop.X)
                     );
-                //rot_spd = 0;
-                Console.WriteLine("trigger");
-
                 rot_spd = (float)(180 - 2 * Math.Acos(player.GetVeloity().Length() / (2 * length)) * 180 / Math.PI);
                 rot_spd *= Math.Sign(tarGetBlock.GetPosition().Y - player.GetPosition().Y) * Math.Sign(player.GetVeloity().X);
-                Console.WriteLine("WireHit!!!!!");
                 tarGetBlock.SetName("TG_green");
                 isUse = true;
                 return;
@@ -100,7 +99,7 @@ namespace WireGame_24.Actor
 
 
 
-            if (Input.GetKeyState(Keys.A))
+            if (IsKeyState())
             {
                 isUse = true;
                 //描画用の線
@@ -109,9 +108,7 @@ namespace WireGame_24.Actor
                 originLength = originLine.Length();
                 originRotate = (float)Math.Atan2(originLine.Y, originLine.X);
                 Vector2 playerVelocity = player.GetVeloity();
-
-                Console.WriteLine("RotSpd:"+rot_spd+" /PlayerSpd:"+playerVelocity);
-
+                
                 isDraw = true;
                 rotate = (float)Math.Atan2(line.Y, line.X);
                 ///////////////////////////////////////////
@@ -156,11 +153,10 @@ namespace WireGame_24.Actor
             {
                 isDraw = false;
             }
-            if (Input.GetKeyRelease(Keys.A))
+            if (IsKeyRelease())
             {
                 tarGetBlock.SetName("TG_yellow");
                 player.SetVelocity(velocity);
-                Console.WriteLine("こここここここここｋ"+ velocity);
                 player.SetJump(true);
 
             }
@@ -197,6 +193,74 @@ namespace WireGame_24.Actor
         public Vector2 GetVelocity()
         {
             return velocity;
+
+
+        }
+
+        public PlayerIndex GetIndex()
+        {
+            return index;
+        }
+
+        /// <summary>
+        /// playerindexに応じたiskeytriggerを返す
+        /// </summary>
+        /// <returns></returns>
+        private bool IsKeyTrigger()
+        {
+            if (Input.GetKeyTrigger(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyTrigger(Keys.A);
+                    //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyTrigger(Keys.L);
+                    //break;
+            }
+            return false;
+        }
+
+        private bool IsKeyState()
+        {
+            if (Input.GetKeyState(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyState(Keys.A);
+                //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyState(Keys.L);
+                    //break;
+            }
+            return false;
+        }
+
+        private bool IsKeyRelease()
+        {
+            if (Input.GetKeyRelease(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyRelease(Keys.A);
+                //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyRelease(Keys.L);
+                    //break;
+            }
+            return false;
         }
     }
 }

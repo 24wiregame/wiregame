@@ -24,7 +24,7 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            renderer.DrawTexture("block", Vector2.Zero);
+            renderer.DrawTexture("Title", Vector2.Zero);
             renderer.End();
         }
 
@@ -41,7 +41,7 @@ namespace WireGame_24.Scene
         public Scene Next()
         {
             //Scene nextScene = Scene.PlayerSelect;
-            Scene nextScene = Scene.SceneSelect;
+            Scene nextScene = Scene.PlayerSelect;
             return nextScene;
         }
 

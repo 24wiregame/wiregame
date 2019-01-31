@@ -52,7 +52,7 @@ namespace WireGame_24.Actor
             //壁の当たってる表面ベクトル
             Vector2 VW;
             //壁の法線ベクトル
-            Vector2 VN;
+            Vector2 VN = new Vector2();
             //a
             Vector2 VA;
             //反射ベクトル
@@ -80,47 +80,75 @@ namespace WireGame_24.Actor
             Vector2 VF = player.GetVeloity();
 
             Direction dir = CheckDirection(gameObject);
-            
-            //プレイヤーがブロックの上面
-            if (dir == Direction.Top)
+
+            //上下どちらか
+            if (Math.Abs(distance.X) < width)
             {
-                VW = position + new Vector2(32, 0) - position;
-                VN = new Vector2(0, -1);
-                VN.Normalize();
-                VA = -VF * VN;
-                VR = VF + 2 * VA * VN;
-                player.SetVelocity(VR);
+                //上下判定
+
+                //上にはねる
+                if (distance.Y < 0)
+                {
+                    VN = new Vector2(0, -1);
+                }
+                //下にはねる
+                else if (distance.Y > 0)
+                {
+                    VN = new Vector2(0, 1);
+                }
             }
-            //プレイヤーがブロックの側面右
-            else if (dir == Direction.Right)
+            else
             {
-                VW = position + new Vector2(0, 32) - position;
-                VN = new Vector2(-1, 0);
-                VN.Normalize();
-                VA = -VF * VN;
-                VR = VF + 2 * VA * VN;
-                player.SetVelocity(VR);
+                //斜めと左右判定
+                //左向きに反射する
+                if (distance.X < 0)
+                {
+                    if (distance.Y < height)
+                    {
+                        VN = new Vector2(-1, -1);
+                    }
+                    else if (distance.Y > height)
+                    {
+                        VN = new Vector2(-1, 1);
+                    }
+                    else
+                    {
+                        VN = new Vector2(-1, 0);
+                    }
+
+
+                }
+                // 右向きに反射する
+                else if (distance.X > 0)
+                {
+                    if (distance.Y < height)
+                    {
+                        VN = new Vector2(1, -1);
+                    }
+                    else if (distance.Y > height)
+                    {
+                        VN = new Vector2(1, 1);
+                    }
+                    else
+                    {
+                        VN = new Vector2(1, 0);
+                    }
+                }
+
+
             }
-            //プレイヤーがブロックの側面左
-            else if (dir == Direction.Left)
+            VN.Normalize();
+
+            //もし法線と同じ方向であれば無視　（跳ね返す方向に対して移動しているから）
+            if (Vector2.Dot(Vector2.Normalize(VF), VN) > 0)
             {
-                VW = position + new Vector2(32,32) - position + new Vector2(32,0);
-                VN = new Vector2(1, 0);
-                VN.Normalize();
-                VA = -VF * VN;
-                VR = VF + 2 * VA * VN;
-                player.SetVelocity(VR);
+                return;
             }
-            //プレイヤーがブロックの底面
-            else if (dir == Direction.Bottom)
-            {
-                VW = position + new Vector2(32, 32) - position + new Vector2(0,32);
-                VN = new Vector2(0, 1);
-                VN.Normalize();
-                VA = -VF * VN;
-                VR = VF + 2 * VA * VN;
-                player.SetVelocity(VR);
-            }
+            VA = Vector2.Dot(VF, VN) * VN;
+            VR = VF - (2 * VA);
+            player.SetVelocity(VR);
+
+            return;
         }
         
 

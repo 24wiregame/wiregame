@@ -50,10 +50,8 @@ namespace WireGame_24.Scene
         {
 
             renderer.Begin();
-            renderer.DrawTexture("block", Vector2.Zero);
-            renderer.DrawTexture("black", new Vector2 (32, 0));
+            renderer.DrawTexture("StageClear", Vector2.Zero);
             timer.Draw2(renderer);
-            
             maxscore.Draw3(renderer);
             renderer.End();
         }

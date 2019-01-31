@@ -8,6 +8,7 @@ using WireGame_24.Device;
 using Microsoft.Xna.Framework.Input;
 using WireGame_24.Actor;
 using WireGame_24.Scene;
+using WireGame_24.Def;
 using WireGame_24.Util;
 namespace WireGame_24.Scene
 {
@@ -19,8 +20,8 @@ namespace WireGame_24.Scene
         private GameObjectManager gameObjectManager;
         private bool isEndFlag;//終了フラグ
         private Map map;
-        private Player player;
-        private TarGet tarGet;            //ターゲット
+        private Player player;         //プレイヤー1
+        private Player player2;　      //プレイヤー2
         private Wire wire;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
         private Goal goal;       //ゴール
@@ -30,7 +31,8 @@ namespace WireGame_24.Scene
         private CountDownTimer down;
         private CountDownTimer start;
         private TimerUI Stime;
-  
+        private Wire wire2;        //ワイヤー2
+
 
 
 
@@ -56,11 +58,18 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-             renderer.DrawTexture("back_1" ,Vector2.Zero);
+             renderer.DrawTexture("Sky" ,Vector2.Zero);
            
             map.Draw(renderer);
             wire.Draw(renderer);
             player.Draw(renderer);
+
+            if (GameData.playerNumber == 2)
+            {
+                player2.Draw(renderer);
+                wire2.Draw(renderer);
+            }
+
             gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
             
@@ -75,15 +84,17 @@ namespace WireGame_24.Scene
         /// </summary>
         public void Initialize()
         {
-            wire = new Wire();
+            wire = new Wire(PlayerIndex.One);
             player = new Player(new Vector2(32 * 2, 32 * 12),
-               GameDevice.Instance(), gameObjectManager,wire);
+               GameDevice.Instance(), gameObjectManager,wire, PlayerIndex.One);
+
+
             wire.SetPlayer(player);
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("test01.csv");
+            map.Load("stage_1.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
 
@@ -92,6 +103,15 @@ namespace WireGame_24.Scene
             down = new CountDownTimer(2);
             start = new CountDownTimer(4);
             Stime = new TimerUI(start);
+            if (GameData.playerNumber == 2)
+            {
+                wire2 = new Wire(PlayerIndex.Two);
+                player2 = new Player(new Vector2(32 * 1, 32 * 4),
+                GameDevice.Instance(), gameObjectManager, wire2, PlayerIndex.Two);
+                wire2.SetPlayer(player2);
+                gameObjectManager.Add(player2);
+            }
+
             sound.PlaySE("start");
            
 
@@ -135,9 +155,96 @@ namespace WireGame_24.Scene
         public void Update(GameTime gameTime)
         {
             sound.PlayBGM("gameplay");
+
             //wire.Update(gameTime);
             start.Update(gameTime);
             if (start.IsTime())
+
+
+            if (Input.GetKeyTrigger(Keys.D1))
+            {
+                isEndFlag = true;
+            }
+            if(player.Isfall())
+            {
+                sound.PlaySE("Down3");
+                isEndFlag = true;
+            }
+            if (player.IsGoalFlag())
+            {
+                sound.StopBGM();
+                timer.ShutDown();
+                isEndFlag = true;
+                sound.PlaySE("end");
+                return;
+            }
+
+
+            //////////////////////////////////
+            if (GameData.playerNumber == 2)
+            {
+                if (player2.Isfall())
+                {
+                    sound.PlaySE("Down3");
+                    isEndFlag = true;
+                }
+                if (player.IsDead())
+                {
+                    isEndFlag = true;
+                }
+                if (player2.IsGoalFlag())
+                {
+                    sound.PlaySE("end");
+                    isEndFlag = true;
+                }
+            }
+            //更新処理
+            if (GameData.playerNumber == 1)
+            {
+                player.setDisplayModify();
+            }
+            if (GameData.playerNumber == 2)
+            {
+                player2.Update(gameTime);
+                wire2.Update(gameTime);
+                if (player2.IsDead())
+                {
+                    return;
+                }
+                map.Hit(player2);
+                if (player.GetPosition().X > player2.GetPosition().X)
+                {
+                    player.setDisplayModify();
+                    if (player2.GetPosition().X <= player.GetPosition().X - Screen.Width / 1.2f)
+                    {
+                        player2.Die();
+                        isEndFlag = true;
+                    }
+                }
+                if (player2.GetPosition().X > player.GetPosition().X)
+                {
+                    player2.setDisplayModify();
+                    if (player.GetPosition().X <= player2.GetPosition().X - Screen.Width / 1.2f)
+                    {
+                        player.Die();
+                        isEndFlag = true;
+                    }
+                }
+                if (player.GetPosition().X == player2.GetPosition().X)
+                {
+                    player.setDisplayModify();
+                }
+            }
+ 
+
+            //更新処理
+            map.Update(gameTime);
+            player.Update(gameTime);
+            wire.Update(gameTime);
+            map.Hit(player);
+
+            if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
+
             {
                 
                 timer.Update(gameTime);

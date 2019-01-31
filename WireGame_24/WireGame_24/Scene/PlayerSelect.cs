@@ -37,7 +37,7 @@ namespace WireGame_24.Scene
             renderer.Begin();
             for (int i = 0; i < 2; i = i + 1)
             {
-                renderer.DrawTexture("01or02", positions[i], sourceRects[i]);
+                renderer.DrawTexture("01or02", positions[i], sourceRects[i],Color.White);
             }
             renderer.DrawTexture("cursor", positions[cursor]);
             renderer.End();

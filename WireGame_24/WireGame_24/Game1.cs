@@ -88,11 +88,9 @@ namespace WireGame_24
             renderer = gameDevice.GetRenderer();
 
             //テクスチャフォルダにあるload画像を指定
-            renderer.LoadContent("load", "./Texture/");
-
-            renderer.LoadContent("number", "./Texture/");
+            renderer.LoadContent("Loading", "./Texture/");
+            renderer.LoadContent("number_wire", "./Texture/");
             renderer.LoadContent("pointer", "./Texture/");
-            renderer.LoadContent("bullet3", "./Texture/");
             //１ピクセルの黒色の画像を生成しレンダラーに登録
             Texture2D fade = new Texture2D(GraphicsDevice, 1, 1);
             Color[] colors = new Color[1 * 1];

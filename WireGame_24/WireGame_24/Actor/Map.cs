@@ -108,7 +108,11 @@ namespace WireGame_24.Actor
         }
         public void Hit(GameObject gameObject)
         {
-
+            //もしgameObjectが死んでいたらマップの判定を無視する
+            if (gameObject.IsDead())
+            {
+                return;
+            }
             //GameObjectのPositionをもとにした矩形の左上のPointを取得
             Point work = gameObject.getRectangle().Location;
             //左上のPointがあるマップの添え字となるx,yを取得
@@ -127,7 +131,6 @@ namespace WireGame_24.Actor
 
             Range yRange = new Range(0, mapList.Count() - 1);
             Range xRange = new Range(0, mapList[0].Count() - 1);
-
             if (gameObject.GetHeight() == 32 &&
                 gameObject.GetWidht()  == 32)
             {
@@ -226,11 +229,15 @@ namespace WireGame_24.Actor
         {
             //row=行,col=列
             //(y-1 <= row <= y+1)
-            for (int row = y - 2; row <= (y + 2) && yRange.IsWithin(row); row += 2)
+            for (int row = y - 2; row <= (y + 2) /*&& yRange.IsWithin(row)*/; row += 2)
             {
+                if (yRange.IsOutOfRange(row))
+                {
+                    continue;
+                }
                 //念のため,xRangeを更新
                 xRange = new Range(0, mapList[row].Count() - 2);
-                for (int col = x - 2; col <= (x + 2) && xRange.IsWithin(col); col +=2)
+                for (int col = x - 2; col <= (x + 2)/* && xRange.IsWithin(col)*/; col +=2)
                 {
                     //(x-1 <= col <= x+1)
                     if (xRange.IsOutOfRange(col) || yRange.IsOutOfRange(row))

@@ -28,17 +28,17 @@ namespace WireGame_24.Util
         public void Draw(Renderer renderer)
         {
             renderer.DrawTexture("score", new Vector2(400, 10));
-            renderer.DrawNumber("number", new Vector2(600, 13), timer.Now());
+            renderer.DrawNumber("number_wire", new Vector2(600, 13), timer.Now());
         }
         public void Draw2(Renderer renderer)
         {
             renderer.DrawTexture("score", new Vector2(400, 500));
-            renderer.DrawNumber("number", new Vector2(600, 500), timer.Now());
+            renderer.DrawNumber("number_wire", new Vector2(600, 500), timer.Now());
         }
         public void Draw3(Renderer renderer)
         {
             renderer.DrawTexture("score", new Vector2(400, 800));
-            renderer.DrawNumber("number", new Vector2(600, 800), timer.Now());
+            renderer.DrawNumber("number_wire", new Vector2(600, 800), timer.Now());
         }
         public float GetScore()
         {

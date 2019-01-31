@@ -39,7 +39,7 @@ namespace WireGame_24.Scene
             renderer.Begin();
             for (int i = 0; i < 1; i = i + 1)//
             {
-                renderer.DrawTexture("stage", positions[i], sourceRects[i]);
+                renderer.DrawTexture("stage", positions[i], sourceRects[i],Color.White);
             }
             renderer.DrawTexture("cursor", positions[cursor]);
             renderer.End();
@@ -73,17 +73,20 @@ namespace WireGame_24.Scene
                 cursor += 1;
                 if (cursor > 2)
                     cursor = 0;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Left))
             {
                 cursor -= 1;
                 if (cursor < 0)
                     cursor = 2;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
                 GameData.stageNumber = cursor + 1;
+                sound.PlaySE("click");
             }
 
         }

@@ -12,16 +12,19 @@ namespace WireGame_24.Scene
     class Title : IScene
     {
         private bool isEndFlag;
+        private Sound sound;
 
         public  Title()
         {
             isEndFlag = false;
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
         }
 
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            renderer.DrawTexture("block", Vector2.Zero);
+            renderer.DrawTexture("Title", Vector2.Zero);
             renderer.End();
         }
 
@@ -37,8 +40,8 @@ namespace WireGame_24.Scene
 
         public Scene Next()
         {
+            //Scene nextScene = Scene.PlayerSelect;
             Scene nextScene = Scene.PlayerSelect;
-            //Scene nextScene = Scene.SceneSelect;
             return nextScene;
         }
 
@@ -48,10 +51,16 @@ namespace WireGame_24.Scene
 
         public void Update(GameTime gameTime)
         {
+            sound.PlayBGM("title4");
             if(Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
+                sound.PlaySE("click");
             }
+        }
+        public void ShutDown()
+        {
+            sound.StopBGM();
         }
     }
 }

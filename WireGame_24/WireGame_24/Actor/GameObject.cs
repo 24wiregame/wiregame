@@ -22,8 +22,9 @@ namespace WireGame_24.Actor
         protected int height;
         protected bool isDeadFlag = false;
         protected GameDevice gameDevice;
+        protected Sound sound;
 
-      public GameObject(string name, Vector2 position, int width,
+        public GameObject(string name, Vector2 position, int width,
           int height, GameDevice gameDevice)
         {
             this.name = name;
@@ -31,6 +32,7 @@ namespace WireGame_24.Actor
             this.width = width;
             this.height = height;
             this.gameDevice = gameDevice;
+            sound = gameDevice.GetSound();
         }
 
         public void SetPosition(Vector2 position)
@@ -111,6 +113,25 @@ namespace WireGame_24.Actor
 
         }
         
+         /// <summary>
+        /// 衝突判定（2点間の距離と円の半径）
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public virtual bool InCollision(GameObject other)
+        {
+            //じぶんと相手の位置の長さを計算（2点間の距離）
+            float length = ((position + new Vector2(16, 16)) - (other.GetPosition()+new Vector2(32,32))).Length();
+            //白玉画像のサイズは64なので、半径は32
+            float radiusSum = 16f + 16f;
+            //自分半径の和と距離を比べて、等しいかまたは小さいか（以下か）
+            if (length <= radiusSum)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 
 

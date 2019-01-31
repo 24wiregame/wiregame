@@ -1,0 +1,10 @@
+diff a/WireGame_24/WireGame_24/Actor/Goal.cs b/WireGame_24/WireGame_24/Actor/Goal.cs	(rejected hunks)
+@@ -10,7 +10,7 @@
+ {
+     class Goal : GameObject
+     {
+-        public Goal(Vector2 position, GameDevice gameDevice) : base("", position, 32, 32, gameDevice)
++        public Goal(Vector2 position, GameDevice gameDevice) : base("red", position, 32, 32, gameDevice)
+         {
+         }
+         public Goal(Goal other) : this(other.position, other.gameDevice)

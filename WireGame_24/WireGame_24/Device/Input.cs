@@ -278,9 +278,18 @@ namespace WireGame_24.Device
             }
             return padvelocity;
         }
-        public static bool GetKeyRelease(Keys key)
+        public static bool GetKeyRelease(PlayerIndex index,Buttons button)
         {
-            return !currentKey.IsKeyDown(key) && previousKey.IsKeyDown(key);
+            if (currentGamePads[index].IsConnected == false)
+            {
+                return false;
+            }
+            return currentGamePads[index].IsButtonDown(button);
+            
+        }
+        public static bool GetKeyRelease(Keys keys)
+        {
+            return !currentKey.IsKeyDown(keys) && previousKey.IsKeyDown(keys);
         }
         
             

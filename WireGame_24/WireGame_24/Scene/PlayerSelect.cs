@@ -37,7 +37,7 @@ namespace WireGame_24.Scene
             renderer.Begin();
             for (int i = 0; i < 2; i = i + 1)
             {
-                renderer.DrawTexture("01or02", positions[i], sourceRects[i]);
+                renderer.DrawTexture("01or02", positions[i], sourceRects[i],Color.White);
             }
             renderer.DrawTexture("cursor", positions[cursor]);
             renderer.End();
@@ -71,17 +71,20 @@ namespace WireGame_24.Scene
                 cursor += 1;
                 if (cursor > 1)
                     cursor = 0;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Left))
             {
                 cursor -= 1;
                 if (cursor < 0)
                     cursor = 1;
+                sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Space))
             {
                 isEndFlag = true;
                 GameData.playerNumber = cursor + 1;
+                sound.PlaySE("click");
             }
 
         }

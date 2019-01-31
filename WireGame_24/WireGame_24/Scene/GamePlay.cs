@@ -8,6 +8,7 @@ using WireGame_24.Device;
 using Microsoft.Xna.Framework.Input;
 using WireGame_24.Actor;
 using WireGame_24.Scene;
+using WireGame_24.Def;
 using WireGame_24.Util;
 namespace WireGame_24.Scene
 {
@@ -19,16 +20,16 @@ namespace WireGame_24.Scene
         private GameObjectManager gameObjectManager;
         private bool isEndFlag;//終了フラグ
         private Map map;
-        private Player player;
-        private Player2 player2;
-        private TarGet tarGet;            //ターゲット
+        private Player player;         //プレイヤー1
+        private Player player2;　      //プレイヤー2
         private Wire wire;        //ワイヤー
-        private Wire2 wire2;        //ワイヤー
         private GameDevice gameDevice;    //ゲームデバイス
         private Goal goal;       //ゴール
         private Timer timer;
         private TimerUI timerUI;//スコア
-  
+        private Sound sound;
+        private Wire wire2;        //ワイヤー2
+
 
 
 
@@ -41,7 +42,8 @@ namespace WireGame_24.Scene
             isEndFlag = false;
             gameObjectManager = new GameObjectManager();
             var gameDevice = GameDevice.Instance();
-           
+            sound = gameDevice.GetSound();
+
             //player = new Player(new Vector2(32 * 2, 32 * 12), GameDevice.Instance());
         }
   
@@ -53,19 +55,21 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            // renderer.DrawTexture("black", Vector2.Zero);
+             renderer.DrawTexture("Sky" ,Vector2.Zero);
            
             map.Draw(renderer);
             wire.Draw(renderer);
             player.Draw(renderer);
-            gameObjectManager.Draw(renderer);
-            wire.Draw(renderer);
+
             if (GameData.playerNumber == 2)
             {
                 player2.Draw(renderer);
                 wire2.Draw(renderer);
             }
 
+            gameObjectManager.Draw(renderer);
+            wire.Draw(renderer);
+            
             timerUI.Draw(renderer);
 
             renderer.End();
@@ -76,28 +80,31 @@ namespace WireGame_24.Scene
         /// </summary>
         public void Initialize()
         {
-            wire = new Wire();
+            wire = new Wire(PlayerIndex.One);
             player = new Player(new Vector2(32 * 2, 32 * 12),
-               GameDevice.Instance(), gameObjectManager,wire);
+               GameDevice.Instance(), gameObjectManager,wire, PlayerIndex.One);
+
+
             wire.SetPlayer(player);
-            if (GameData.playerNumber == 2)
-            {
-                wire2 = new Wire2();
-                player2 = new Player2(new Vector2(32 * 1, 32 * 12),
-                GameDevice.Instance(), gameObjectManager, wire2);
-                wire2.SetPlayer(player2);
-                gameObjectManager.Add(player2);
-            }
             gameObjectManager.Initialize();
             //シーン終了フラグを初期化
             isEndFlag = false;
             map = new Map(GameDevice.Instance());
-            map.Load("stage01a.csv");
+            map.Load("stage_1.csv");
             gameObjectManager.Add(map);
             gameObjectManager.Add(player);
 
             timer = new CountUpTimer(100);
             timerUI = new TimerUI(timer);
+            if (GameData.playerNumber == 2)
+            {
+                wire2 = new Wire(PlayerIndex.Two);
+                player2 = new Player(new Vector2(32 * 1, 32 * 4),
+                GameDevice.Instance(), gameObjectManager, wire2, PlayerIndex.Two);
+                wire2.SetPlayer(player2);
+                gameObjectManager.Add(player2);
+            }
+            sound.PlaySE("start");
            
 
         }
@@ -143,9 +150,8 @@ namespace WireGame_24.Scene
             //wire.Update(gameTime);
 
             timer.Update(gameTime);
-           
- 
-           
+
+            sound.PlayBGM("gameplay");
 
             if (Input.GetKeyTrigger(Keys.D1))
             {
@@ -153,33 +159,42 @@ namespace WireGame_24.Scene
             }
             if(player.Isfall())
             {
+                sound.PlaySE("Down3");
                 isEndFlag = true;
             }
             if (player.IsGoalFlag())
             {
+                sound.StopBGM();
+                timer.ShutDown();
                 isEndFlag = true;
+                sound.PlaySE("end");
+                return;
             }
+
+
+            //////////////////////////////////
             if (GameData.playerNumber == 2)
             {
                 if (player2.Isfall())
+                {
+                    sound.PlaySE("Down3");
+                    isEndFlag = true;
+                }
+                if (player.IsDead())
                 {
                     isEndFlag = true;
                 }
                 if (player2.IsGoalFlag())
                 {
+                    sound.PlaySE("end");
                     isEndFlag = true;
                 }
             }
             //更新処理
-            map.Update(gameTime);
-            player.Update(gameTime);
-            wire.Update(gameTime);
-            if (player.IsDead())
+            if (GameData.playerNumber == 1)
             {
-                timer.ShutDown();
-                return;
+                player.setDisplayModify();
             }
-            map.Hit(player);
             if (GameData.playerNumber == 2)
             {
                 player2.Update(gameTime);
@@ -189,20 +204,48 @@ namespace WireGame_24.Scene
                     return;
                 }
                 map.Hit(player2);
+                if (player.GetPosition().X > player2.GetPosition().X)
+                {
+                    player.setDisplayModify();
+                    if (player2.GetPosition().X <= player.GetPosition().X - Screen.Width / 1.2f)
+                    {
+                        player2.Die();
+                        isEndFlag = true;
+                    }
+                }
+                if (player2.GetPosition().X > player.GetPosition().X)
+                {
+                    player2.setDisplayModify();
+                    if (player.GetPosition().X <= player2.GetPosition().X - Screen.Width / 1.2f)
+                    {
+                        player.Die();
+                        isEndFlag = true;
+                    }
+                }
+                if (player.GetPosition().X == player2.GetPosition().X)
+                {
+                    player.setDisplayModify();
+                }
             }
+            //////////////////////////////////////
+
+            //更新処理
+            map.Update(gameTime);
+            player.Update(gameTime);
+            wire.Update(gameTime);
+            map.Hit(player);
 
             if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
             {
 
                 isEndFlag = true;
                 timer.ShutDown();
-
             }
         }
         public TimerUI returnScore()
         {
             return timerUI ;
         }
-
+       
     }
 }

@@ -9,12 +9,13 @@ namespace WireGame_24.Actor
 {
     class Cushion : GameObject
     {
-        public Cushion(Vector2 position, GameDevice gameDevice)
-           : base("black", position, 32, 32, gameDevice)
-        { }
+        public Cushion(string name, Vector2 position, GameDevice gameDevice)
+           : base(name, position, 32, 32, gameDevice)
+        {
+        }
 
         public Cushion(Cushion other)
-            : this(other.position, other.gameDevice)
+            : this(other.name,other.position, other.gameDevice)
         {
         }
 
@@ -29,9 +30,11 @@ namespace WireGame_24.Actor
 
         public override void Hit(GameObject gameObject)
         {
+            
             var player = gameObject as Player;
             if (player == null)
             {
+                sound.PlaySE("jump");
                 return;
             }
             player.SetVelocity(new Vector2(0, 0));

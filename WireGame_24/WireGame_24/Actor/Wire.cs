@@ -35,13 +35,21 @@ namespace WireGame_24.Actor
 
         private bool isUse;
 
-        public Wire()
+        private Sound sound;
+
+        private PlayerIndex index;
+
+        public Wire(PlayerIndex index)
         {
+            this.index = index;
             
             isDraw = false;
             gravity = 0.5f;
 
             isUse = false;
+
+            var gameDevice = GameDevice.Instance();
+            sound = gameDevice.GetSound();
         }
 
         public void SetPlayer(Player player)
@@ -61,14 +69,18 @@ namespace WireGame_24.Actor
         {
             if (player.IsDead())
             {
+                isUse = false;
+                isDraw = false;
                 return;
             }
             
             // 重りの座標
             isUse = false;
             ////////////////////////////////////////////////
-            if (Input.GetKeyTrigger(Keys.A))
+            if (IsKeyTrigger())
             {
+                sound.PlaySE("play4");
+
                 wirePosition = player.GetPosition();
                 line = wireTop - wirePosition;
                 length = line.Length();                       //線の長さ
@@ -77,12 +89,8 @@ namespace WireGame_24.Actor
                         player.GetPosition().Y - wireTop.Y,
                         player.GetPosition().X - wireTop.X)
                     );
-                //rot_spd = 0;
-                Console.WriteLine("trigger");
-
                 rot_spd = (float)(180 - 2 * Math.Acos(player.GetVeloity().Length() / (2 * length)) * 180 / Math.PI);
                 rot_spd *= Math.Sign(tarGetBlock.GetPosition().Y - player.GetPosition().Y) * Math.Sign(player.GetVeloity().X);
-                Console.WriteLine("WireHit!!!!!");
                 tarGetBlock.SetName("TG_green");
                 isUse = true;
                 return;
@@ -90,7 +98,8 @@ namespace WireGame_24.Actor
 
 
 
-            if (Input.GetKeyState(Keys.A))
+
+            if (IsKeyState())
             {
                 isUse = true;
                 //描画用の線
@@ -99,9 +108,7 @@ namespace WireGame_24.Actor
                 originLength = originLine.Length();
                 originRotate = (float)Math.Atan2(originLine.Y, originLine.X);
                 Vector2 playerVelocity = player.GetVeloity();
-
-                Console.WriteLine("RotSpd:"+rot_spd+" /PlayerSpd:"+playerVelocity);
-
+                
                 isDraw = true;
                 rotate = (float)Math.Atan2(line.Y, line.X);
                 ///////////////////////////////////////////
@@ -127,6 +134,7 @@ namespace WireGame_24.Actor
                 rot_spd *= 0.999f;
                 // 角度に角速度を加算
                 rot += rot_spd;
+                
                 // 新しい重りの位置
                 rad = rot * Math.PI / 180;
                 px = wireTop.X + Math.Cos(rad) * length;
@@ -134,6 +142,7 @@ namespace WireGame_24.Actor
 
 
                 velocity = new Vector2((float)px - player.GetPosition().X, (float)py - player.GetPosition().Y);
+               
 
                 player.SetVelocity(new Vector2());
                 player.SetPositionX((float)px);
@@ -144,11 +153,10 @@ namespace WireGame_24.Actor
             {
                 isDraw = false;
             }
-            if (Input.GetKeyRelease(Keys.A))
+            if (IsKeyRelease())
             {
                 tarGetBlock.SetName("TG_yellow");
                 player.SetVelocity(velocity);
-                Console.WriteLine("こここここここここｋ"+ velocity);
                 player.SetJump(true);
 
             }
@@ -172,7 +180,7 @@ namespace WireGame_24.Actor
             {
                 renderer.DrawTexture(
                 "pointer",
-                wireTop +new Vector2(16,16) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
+                wireTop +new Vector2(14,14) +GameDevice.Instance().GetDisplayModify(),　　　　　　　　　　　　　　　//wireTopからプレイヤーに向かって伸びている
                 originRotate + (float)Math.PI / 2.0f,
                 Vector2.Zero,
                 new Vector2(1, length));
@@ -185,6 +193,74 @@ namespace WireGame_24.Actor
         public Vector2 GetVelocity()
         {
             return velocity;
+
+
+        }
+
+        public PlayerIndex GetIndex()
+        {
+            return index;
+        }
+
+        /// <summary>
+        /// playerindexに応じたiskeytriggerを返す
+        /// </summary>
+        /// <returns></returns>
+        private bool IsKeyTrigger()
+        {
+            if (Input.GetKeyTrigger(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyTrigger(Keys.A);
+                    //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyTrigger(Keys.L);
+                    //break;
+            }
+            return false;
+        }
+
+        private bool IsKeyState()
+        {
+            if (Input.GetKeyState(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyState(Keys.A);
+                //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyState(Keys.L);
+                    //break;
+            }
+            return false;
+        }
+
+        private bool IsKeyRelease()
+        {
+            if (Input.GetKeyRelease(index, Buttons.A))
+            {
+                return true;
+            }
+
+            switch (index)
+            {
+                case PlayerIndex.One:
+                    return Input.GetKeyRelease(Keys.A);
+                //break;
+                case PlayerIndex.Two:
+                    return Input.GetKeyRelease(Keys.L);
+                    //break;
+            }
+            return false;
         }
     }
 }

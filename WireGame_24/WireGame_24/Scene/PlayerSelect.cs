@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using WireGame_24.Def;
 using WireGame_24.Device;
 
 namespace WireGame_24.Scene
@@ -23,13 +24,13 @@ namespace WireGame_24.Scene
             sound = gameDevice.GetSound();
             positions = new List<Vector2>()
             {
-                new Vector2(64,128),
-                new Vector2(480,128),
+                new Vector2(Screen.Width/2-850,Screen.Height/2-200),
+                new Vector2(Screen.Width/2+50,Screen.Height/2-200),
             };
             sourceRects = new List<Rectangle>()
             {
-                new Rectangle(0,0,320,180),
-                new Rectangle(320,0,320,180),
+                new Rectangle(0,0,800,400),
+                new Rectangle(800,0,800,400),
             };
         }
         public void Draw(Renderer renderer)
@@ -37,9 +38,9 @@ namespace WireGame_24.Scene
             renderer.Begin();
             for (int i = 0; i < 2; i = i + 1)
             {
-                renderer.DrawTexture("01or02", positions[i], sourceRects[i],Color.White);
+                renderer.DrawTexture("1,2mode", positions[i], sourceRects[i],Color.White);
             }
-            renderer.DrawTexture("cursor", positions[cursor]);
+            renderer.DrawTexture("MF", positions[cursor]);
             renderer.End();
         }
 

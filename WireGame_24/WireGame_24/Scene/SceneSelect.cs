@@ -26,22 +26,27 @@ namespace WireGame_24.Scene
                 new Vector2(64,128),
                 new Vector2(480,128),
                 new Vector2(896,128),
+                new Vector2(1285,128),
+                new Vector2(64,448),
+                //new Vector2(480,448),
             };
             sourceRects = new List<Rectangle>()
             {
-                new Rectangle(0,0,320,180),
-                new Rectangle(320,0,320,180),
-                new Rectangle(640,0,320,180),
+                new Rectangle(0,0,300,250),
+                new Rectangle(300,0,300,250),
+                new Rectangle(600,0,300,250),
+                new Rectangle(900,0,300,250),
+                new Rectangle(1200,0,300,250),
             };
         }
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
-            for (int i = 0; i < 1; i = i + 1)//
+            for (int i = 0; i < 5; i = i + 1)//
             {
-                renderer.DrawTexture("stage", positions[i], sourceRects[i],Color.White);
+                renderer.DrawTexture("stage1,5", positions[i], sourceRects[i],Color.White);
             }
-            renderer.DrawTexture("cursor", positions[cursor]);
+            renderer.DrawTexture("SF", positions[cursor]);
             renderer.End();
         }
 
@@ -71,7 +76,7 @@ namespace WireGame_24.Scene
             if (Input.GetKeyTrigger(Keys.Right))
             {
                 cursor += 1;
-                if (cursor > 2)
+                if (cursor > 4)
                     cursor = 0;
                 sound.PlaySE("click");
             }
@@ -79,7 +84,7 @@ namespace WireGame_24.Scene
             {
                 cursor -= 1;
                 if (cursor < 0)
-                    cursor = 2;
+                    cursor = 4;
                 sound.PlaySE("click");
             }
             if (Input.GetKeyTrigger(Keys.Space))

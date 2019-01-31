@@ -104,10 +104,6 @@ namespace WireGame_24.Scene
 
                 //プレイヤー
                 {"renban",path },
-                {"one",path },
-                {"two",path },
-                {"three",path },
-                {"START",path },
                 {"renban_1",path },
                 {"swing_1",path },
 

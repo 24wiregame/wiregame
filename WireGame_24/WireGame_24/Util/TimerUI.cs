@@ -44,22 +44,21 @@ namespace WireGame_24.Util
         {
             if (timer.Now() <= 4&timer.Now()>=3)
             {
-                renderer.DrawTexture("three", new Vector2(800, 300));
+                renderer.DrawTexture("3", new Vector2(800, 300));
             }
             else if (timer.Now() <= 3&timer.Now()>=2)
             {
-                renderer.DrawTexture("two", new Vector2(800, 300));
+                renderer.DrawTexture("2", new Vector2(800, 300));
             }
             else if (timer.Now() <= 2&timer.Now()>=1)
             {
-                renderer.DrawTexture("one", new Vector2(800, 300));
+                renderer.DrawTexture("1", new Vector2(800, 300));
             }
             else if(timer.Now()<=1&timer.Now()>=0.1f)
             {
-                renderer.DrawTexture("START", new Vector2(800, 300));
-                
+                renderer.DrawTexture("start", new Vector2(800, 300));
             }
-            
+           
         }
       
         public float GetScore()

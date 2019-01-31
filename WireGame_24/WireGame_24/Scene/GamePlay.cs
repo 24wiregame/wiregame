@@ -68,13 +68,14 @@ namespace WireGame_24.Scene
             {
                 player2.Draw(renderer);
                 wire2.Draw(renderer);
+                Stime.Draw4(renderer);
             }
 
             gameObjectManager.Draw(renderer);
             wire.Draw(renderer);
             
             timerUI.Draw(renderer);
-            Stime.Draw4(renderer);
+            //Stime.Draw4(renderer);
 
             renderer.End();
         }
@@ -157,45 +158,61 @@ namespace WireGame_24.Scene
             sound.PlayBGM("gameplay");
 
             //wire.Update(gameTime);
-            start.Update(gameTime);
-            if (start.IsTime())
+            //start.Update(gameTime);
+            //if (start.IsTime())
 
 
-            if (Input.GetKeyTrigger(Keys.D1))
-            {
-                isEndFlag = true;
+                if (Input.GetKeyTrigger(Keys.D1))
+                {
+                    isEndFlag = true;
+                }
+                if (player.Isfall())
+                {
+                    if (down.Rate() == 0.0f)
+                    {
+                        sound.PlaySE("Down3");
+                    }
+                    down.Update(gameTime);
+                    if (down.IsTime())
+                    {
+                        player = new Player(new Vector2(32 * 2, 32 * 12),
+                        GameDevice.Instance(), gameObjectManager, wire, PlayerIndex.One);
+                        wire.SetPlayer(player);
+                        gameObjectManager.Add(map);
+                        gameObjectManager.Add(player);
+                        down.Initialize();
+                        sound.PlaySE("start");
+                        //isEndFlag = true;
+                    }
             }
-            if(player.Isfall())
-            {
-                sound.PlaySE("Down3");
-                isEndFlag = true;
-            }
-            if (player.IsGoalFlag())
-            {
-                sound.StopBGM();
-                timer.ShutDown();
-                isEndFlag = true;
-                sound.PlaySE("end");
-                return;
-            }
-
-
-            //////////////////////////////////
+                if (player.IsGoalFlag())
+                {
+                    sound.StopBGM();
+                    timer.ShutDown();
+                    isEndFlag = true;
+                    sound.PlaySE("end");
+                    return;
+                }
+           //二人プレイ
             if (GameData.playerNumber == 2)
             {
-                if (player2.Isfall())
+                start.Update(gameTime);
+                if (start.IsTime())
                 {
-                    sound.PlaySE("Down3");
-                    isEndFlag = true;
-                }
-                if (player.IsDead())
-                {
-                    isEndFlag = true;
-                }
-                if (player2.IsGoalFlag())
-                {
-                    sound.PlaySE("end");
-                    isEndFlag = true;
+                    if (player2.Isfall())
+                    {
+                        sound.PlaySE("Down3");
+                        isEndFlag = true;
+                    }
+                    if (player.IsDead())
+                    {
+                        isEndFlag = true;
+                    }
+                    if (player2.IsGoalFlag())
+                    {
+                        sound.PlaySE("end");
+                        isEndFlag = true;
+                    }
                 }
             }
             //更新処理
@@ -235,50 +252,9 @@ namespace WireGame_24.Scene
                     player.setDisplayModify();
                 }
             }
- 
-
-            //更新処理
-            map.Update(gameTime);
-            player.Update(gameTime);
-            wire.Update(gameTime);
-            map.Hit(player);
-
-            if (Input.GetKeyTrigger(Microsoft.Xna.Framework.Input.Keys.Z))
-
-            {
+        
                 
                 timer.Update(gameTime);
-                if (Input.GetKeyTrigger(Keys.D1))
-                {
-                    isEndFlag = true;
-                }
-                if (player.Isfall())
-                {
-                    if (down.Rate()==0.0f)
-                    {
-                        sound.PlaySE("Down3");
-                    }
-                    down.Update(gameTime);
-                    if (down.IsTime())
-                    {
-                        player = new Player(new Vector2(32 * 2, 32 * 12),
-                       GameDevice.Instance(), gameObjectManager, wire);
-                        wire.SetPlayer(player);
-                        gameObjectManager.Add(map);
-                        gameObjectManager.Add(player);
-                        down.Initialize();
-                        sound.PlaySE("start");
-                        //isEndFlag = true;
-                    }
-                }
-                if (player.IsGoalFlag())
-                {
-                    sound.StopBGM();
-                    timer.ShutDown();
-                    isEndFlag = true;
-                    sound.PlaySE("end");
-                    return;
-                }
                 //更新処理
                 map.Update(gameTime);
                 player.Update(gameTime);
@@ -290,8 +266,8 @@ namespace WireGame_24.Scene
 
                     isEndFlag = true;
                     timer.ShutDown();
+                    //}
                 }
-            }
         }
         public TimerUI returnScore()
         {

@@ -40,6 +40,28 @@ namespace WireGame_24.Util
             renderer.DrawTexture("score", new Vector2(400, 800));
             renderer.DrawNumber("number", new Vector2(600, 800), timer.Now());
         }
+        public void Draw4(Renderer renderer)
+        {
+            if (timer.Now() <= 4&timer.Now()>=3)
+            {
+                renderer.DrawTexture("three", new Vector2(800, 300));
+            }
+            else if (timer.Now() <= 3&timer.Now()>=2)
+            {
+                renderer.DrawTexture("two", new Vector2(800, 300));
+            }
+            else if (timer.Now() <= 2&timer.Now()>=1)
+            {
+                renderer.DrawTexture("one", new Vector2(800, 300));
+            }
+            else if(timer.Now()<=1&timer.Now()>=0.1f)
+            {
+                renderer.DrawTexture("START", new Vector2(800, 300));
+                
+            }
+            
+        }
+      
         public float GetScore()
         {
             return timer.Now();

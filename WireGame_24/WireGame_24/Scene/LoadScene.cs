@@ -89,6 +89,10 @@ namespace WireGame_24.Scene
                 {"DeathBall",path },
                 {"IMG_0921",path },
                 {"renban",path },
+                {"one",path },
+                {"two",path },
+                {"three",path },
+                {"START",path },
                 
                 // numberの画像はLoadシーンで使うので、Game1クラスで読み込む
                 //{ "number", path } 

@@ -40,8 +40,8 @@ namespace WireGame_24.Scene
 
         public Scene Next()
         {
-            //Scene nextScene = Scene.PlayerSelect;
-            Scene nextScene = Scene.SceneSelect;
+            Scene nextScene = Scene.PlayerSelect;
+            //Scene nextScene = Scene.SceneSelect;
             return nextScene;
         }
 

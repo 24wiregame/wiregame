@@ -32,11 +32,13 @@ namespace WireGame_24.Util
         }
         public void Draw2(Renderer renderer)
         {
+           
             renderer.DrawTexture("score", new Vector2(400, 500));
             renderer.DrawNumber("number_wire", new Vector2(600, 500), timer.Now());
         }
         public void Draw3(Renderer renderer)
         {
+            renderer.DrawTexture("high", new Vector2(200, 800));
             renderer.DrawTexture("score", new Vector2(400, 800));
             renderer.DrawNumber("number_wire", new Vector2(600, 800), timer.Now());
         }

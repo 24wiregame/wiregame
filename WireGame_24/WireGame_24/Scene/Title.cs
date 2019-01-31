@@ -25,6 +25,7 @@ namespace WireGame_24.Scene
         {
             renderer.Begin();
             renderer.DrawTexture("Title", Vector2.Zero);
+            renderer.DrawTexture("24",new Vector2(1500, 200));
             renderer.End();
         }
 

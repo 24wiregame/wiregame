@@ -48,6 +48,7 @@
     <Compile Include="Actor\GameObjectManager.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Interface\IApplicableDead.cs" />
+    <Compile Include="Actor\Jump2.cs" />
     <Compile Include="Actor\Jump.cs" />
     <Compile Include="Actor\Map.cs" />
     <Compile Include="Actor\Player.cs" />

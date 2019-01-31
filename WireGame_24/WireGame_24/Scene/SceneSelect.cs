@@ -42,6 +42,7 @@ namespace WireGame_24.Scene
         public void Draw(Renderer renderer)
         {
             renderer.Begin();
+            renderer.DrawTexture("back0", Vector2.Zero);
             for (int i = 0; i < 5; i = i + 1)//
             {
                 renderer.DrawTexture("stage1,5", positions[i], sourceRects[i],Color.White);

@@ -27,6 +27,7 @@ namespace WireGame_24.Actor
         private bool isGoalFlag;
         private Motion motion;
         private Sound sound;
+        private Color color;
 
         private PlayerIndex index;
 
@@ -35,7 +36,7 @@ namespace WireGame_24.Actor
         /// </summary>
         public OnHit OnHitEvent { get; set; }
 
-        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire, PlayerIndex index)
+        public Player(Vector2 position, GameDevice gameDevice, IGameObjectMediator mediator, Wire wire,Color color, PlayerIndex index)
             : base("renban_1", position, 64, 64, gameDevice)
         {
             this.index = index;
@@ -44,6 +45,7 @@ namespace WireGame_24.Actor
             this.mediator = mediator;
             this.wire = wire;
             sound = gameDevice.GetSound();
+            this.color = color;
 
             motion = new Motion();
             for (int i = 0; i < 16; i++)
@@ -54,7 +56,7 @@ namespace WireGame_24.Actor
             motion.Initialize(new Range(0, 14), new CountDownTimer(0.05f));
         }
         public Player(Player other)
-            : this(other.position, other.gameDevice, other.mediator,other.wire, other.index)
+            : this(other.position, other.gameDevice, other.mediator,other.wire, other.color,other.index)
         {
         }
 
@@ -94,17 +96,17 @@ namespace WireGame_24.Actor
             {
                 if(!IsDead())
                 {
-                    renderer.DrawTexture(name, position + gameDevice.GetDisplayModify(), motion.DrawingRange(),Color.Red);
+                    renderer.DrawTexture(name, position + gameDevice.GetDisplayModify(), motion.DrawingRange(),color);
                 }
                
             }
             else
             {
-                renderer.DrawTexture("swing_1", position + gameDevice.GetDisplayModify());
+                renderer.DrawTexture("swing_2", position + gameDevice.GetDisplayModify(),color);
             }
             if(IsDead())
             {
-                renderer.DrawTexture("death", position + gameDevice.GetDisplayModify());
+                renderer.DrawTexture("death_siro", position + gameDevice.GetDisplayModify(),color);
             }
 
         }

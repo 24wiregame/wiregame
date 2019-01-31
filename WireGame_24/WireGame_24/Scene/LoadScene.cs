@@ -64,8 +64,10 @@ namespace WireGame_24.Scene
                 //UI
                 {"number_wire",path }, //数字
                 {"score",path },
+                {"high",path },
                 {"time",path },
                 {"Loading",path },
+                {"24",path },
 
                 //ブロック
                 {"red",path },
@@ -79,9 +81,10 @@ namespace WireGame_24.Scene
                 {"TG_yellow",path },
                 {"TG_black",path },
                 
-                {"JB_2",path },
+                {"JB2",path },
                 {"JB_5",path },
                 {"JB_7",path },
+                {"JB7",path },
 
                 {"CB_1",path },
                 {"CB_2",path },
@@ -105,9 +108,9 @@ namespace WireGame_24.Scene
                 //プレイヤー
                 {"renban",path },
                 {"renban_1",path },
-                {"swing_1",path },
+                {"swing_2",path },
 
-                {"death",path },
+                {"death_siro",path },
                 {"pointer",path },　//wire
                 //カウントダウン
                 {"1",path },
@@ -116,6 +119,7 @@ namespace WireGame_24.Scene
                 {"start",path },
                 {"SF",path },
                 {"1,2mode",path }
+
                 
 
 
@@ -231,7 +235,7 @@ namespace WireGame_24.Scene
                 //バーで描画
                 renderer.DrawTexture(
                     "fade",
-                    new Vector2(0, 500),
+                    new Vector2(0, 600),
                     null,
                     0.0f,
                     Vector2.Zero,

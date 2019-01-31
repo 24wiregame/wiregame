@@ -51,9 +51,11 @@
     <Compile Include="Actor\Jump.cs" />
     <Compile Include="Actor\Map.cs" />
     <Compile Include="Actor\Player.cs" />
+    <Compile Include="Actor\Player2.cs" />
     <Compile Include="Actor\Space.cs" />
     <Compile Include="Actor\TarGetBlock.cs" />
     <Compile Include="Actor\Wire.cs" />
+    <Compile Include="Actor\Wire2.cs" />
     <Compile Include="Def\Screen.cs" />
     <Compile Include="Device\BGMLoader.cs" />
     <Compile Include="Device\CSVReader.cs" />

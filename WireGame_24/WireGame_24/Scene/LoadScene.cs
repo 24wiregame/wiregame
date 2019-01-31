@@ -114,6 +114,8 @@ namespace WireGame_24.Scene
                 {"2",path },
                 {"3",path },
                 {"start",path },
+                {"SF",path },
+                {"1,2mode",path }
                 
 
 
